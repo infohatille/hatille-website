@@ -12,7 +12,7 @@ import { marked } from 'marked';
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const OUT = path.join(ROOT, 'dist');
 const SITE = 'https://hatille.com';
-const SKIP = new Set(['dist', 'node_modules', 'content', 'scripts', '.git', '.github', 'package.json', 'package-lock.json', 'netlify.toml', 'HOW-TO-LAUNCH.txt', 'README.md', '.gitignore']);
+const SKIP = new Set(['dist', 'node_modules', 'content', 'scripts', '.git', '.github', 'package.json', 'package-lock.json', 'netlify.toml', 'HOW-TO-LAUNCH.txt', 'README.md', 'LICENSE', '.gitignore']);
 
 const esc = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const abs = p => !p ? '' : /^https?:\/\//.test(p) ? p : '/' + String(p).replace(/^\/+/, '');
