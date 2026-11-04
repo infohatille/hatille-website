@@ -199,3 +199,28 @@ a:hover .ph-frame img,.ph-frame:hover img{transform:scale(1.04)}
 .season-warn{border:1px solid var(--gold);border-left:4px solid var(--gold);background:#fffaf0;padding:20px 24px;margin:0 0 34px;color:#2a2622;font-size:15px;line-height:1.6}
 .season-warn p{margin:8px 0 0}.season-warn a{color:var(--gold-deep);text-decoration:underline}
 .season-warn .fs{color:#7a2e1f}
+
+/* blog cards (Blog page and post pages) */
+.posts{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:40px}
+@media (max-width:900px){.posts{grid-template-columns:1fr}}
+.post{cursor:pointer;text-align:left;font:inherit;padding:0;border:1px solid var(--line);background:var(--white);color:inherit}
+.post:hover{border-color:var(--gold)}
+.post .cov{aspect-ratio:4/3;display:flex;align-items:flex-end;padding:22px;position:relative;overflow:hidden}
+.post .cov img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.post .body{padding:26px}
+.post h3{font-size:24px;margin:12px 0 10px}
+a.post{display:block;text-decoration:none}
+/* blog post page */
+.wrap.narrow{max-width:760px}
+.post-page{padding-top:150px}
+.post-page .back{display:table;margin-bottom:22px;color:var(--gold-deep);text-decoration:none;font-size:14px;letter-spacing:.04em}
+.post-page h1{font-size:clamp(34px,5vw,56px);margin:16px 0 14px;line-height:1.1}
+.post-page .hero-img{width:100%;aspect-ratio:16/9;object-fit:cover;margin:30px 0 34px}
+.prose{font-size:17px;line-height:1.8}
+.prose h2,.prose h3,.prose h4{margin:34px 0 10px;line-height:1.25}
+.prose h2{font-size:26px}.prose h3{font-size:22px}.prose h4{font-size:19px}
+.prose p{margin:0 0 18px}
+.prose a{color:var(--gold-deep)}
+.prose img{max-width:100%;height:auto;margin:14px 0}
+.prose ul,.prose ol{padding-left:22px;margin:0 0 18px}
+.prose blockquote{border-left:3px solid var(--gold);margin:24px 0;padding:4px 0 4px 20px;font-family:Lora,serif;font-style:italic;font-size:20px}

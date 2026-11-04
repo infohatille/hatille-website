@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Hatille Staff · Blog editor</title>
+<link rel="icon" href="/assets/img/hatille-icon-black.svg">
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+<script src="https://unpkg.com/decap-cms@3.17.3/dist/decap-cms.js"></script>
+<script>
+  CMS.registerPreviewStyle('/assets/style.css');
+  CMS.registerPreviewStyle('.prose{font-family:Poppins,sans-serif;font-weight:300;padding:30px;max-width:760px;margin:0 auto}.prose h1{font-weight:300;font-size:44px;margin:10px 0 6px}.prose .hero-img{width:100%;aspect-ratio:16/9;object-fit:cover;margin:20px 0}', { raw: true });
+  CMS.registerPreviewTemplate('blog', ({ entry, widgetFor, getAsset }) => {
+    const d = entry.get('data'), img = d.get('image');
+    return h('div', { className: 'prose' },
+      h('span', { className: 'tag' }, d.get('category') || ''),
+      h('h1', {}, d.get('title') || 'Untitled post'),
+      img ? h('img', { className: 'hero-img', src: getAsset(img).toString() }) : null,
+      widgetFor('body'));
+  });
+</script>
+</body>
+</html>

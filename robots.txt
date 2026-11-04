@@ -6,5 +6,6 @@ Disallow: /room
 Disallow: /room.html
 Disallow: /download
 Disallow: /download.html
+Disallow: /admin
 
 Sitemap: https://hatille.com/sitemap.xml

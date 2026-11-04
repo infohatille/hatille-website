@@ -1,0 +1,46 @@
+# Hatille staff blog editor (Decap CMS). Staff sign in with Netlify Identity (invite only).
+backend:
+  name: git-gateway
+  branch: main
+  commit_messages:
+    create: 'Blog: new post "{{slug}}" (by {{author-name}})'
+    update: 'Blog: edit "{{slug}}" (by {{author-name}})'
+    delete: 'Blog: delete "{{slug}}" (by {{author-name}})'
+    uploadMedia: 'Blog: upload image {{path}}'
+    deleteMedia: 'Blog: delete image {{path}}'
+
+# Drafts are saved without changing the live site. Only "Publish" updates hatille.com.
+publish_mode: editorial_workflow
+
+site_url: https://hatille.com
+display_url: https://hatille.com
+logo_url: /assets/img/hatille-icon-black.svg
+locale: en
+
+media_folder: assets/img/blog
+public_folder: /assets/img/blog
+
+collections:
+  - name: blog
+    label: Blog posts
+    label_singular: Blog post
+    description: Stories that appear on hatille.com/blog. Save as a draft, preview, then publish.
+    folder: content/blog
+    create: true
+    delete: true
+    slug: '{{slug}}'
+    preview_path: 'blog/{{slug}}'
+    summary: '{{title}} · {{category}} · {{year}}-{{month}}-{{day}}'
+    sortable_fields: [date, title, category]
+    view_groups:
+      - { label: Category, field: category }
+    fields:
+      - { label: Title, name: title, widget: string }
+      - label: Category
+        name: category
+        widget: select
+        options: [My Journey, Colour Analysis, Fabric, Bridal, Wellness, Fashion, Alterations, Hatille News]
+      - { label: Publish date, name: date, widget: datetime, date_format: 'MMMM D, YYYY', time_format: false, format: 'YYYY-MM-DDTHH:mm:ss.SSSZ' }
+      - { label: Cover photo, name: image, widget: image, hint: 'A wide photo works best (at least 1600 px across).' }
+      - { label: Short summary, name: summary, widget: text, required: false, hint: 'One or two sentences. Shown in Google results and when the post is shared. Leave empty to use the first lines of the post.' }
+      - { label: Post, name: body, widget: markdown }

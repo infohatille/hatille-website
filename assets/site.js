@@ -1,3 +1,5 @@
+/* Staff invite / password-reset links land on the home page: send them to the staff login */
+if (/(invite|recovery|confirmation|email_change)_token=/.test(location.hash) && !location.pathname.startsWith('/admin')) location.replace('/admin/' + location.hash);
 /* Hatille shared header, footer and helpers */
 const HATILLE = {
   email: 'info.hatille@gmail.com',
@@ -28,12 +30,13 @@ const HATILLE = {
 
 (function () {
   let here = (location.pathname.split('/').pop() || 'index').toLowerCase().replace(/\.html$/, '');
+  if (/^\/blog\//.test(location.pathname)) here = 'blog';
   if (here === '') here = 'index';
   const header = document.createElement('header');
   header.className = 'site-header no-print';
   header.innerHTML = `
     <nav class="nav" aria-label="Main">
-      <a class="logo" href="/" aria-label="Hatille home"><img src="assets/img/hatille-wordmark-gold.svg" alt="Hatille"></a>
+      <a class="logo" href="/" aria-label="Hatille home"><img src="/assets/img/hatille-wordmark-gold.svg" alt="Hatille"></a>
       <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
       <ul id="menu">${HATILLE.nav.map(([t, h]) => `<li><a href="${h}"${h.replace(/^\//, '') === here || (h === '/' && here === 'index') ? ' aria-current="page"' : ''}>${t}</a></li>`).join('')}</ul>
     </nav>`;
@@ -46,7 +49,7 @@ const HATILLE = {
   footer.innerHTML = `
     <div class="wrap">
       <div class="cols">
-        <div><img src="assets/img/hatille-wordmark-gold.svg" alt="Hatille" style="height:26px;margin-bottom:24px">
+        <div><img src="/assets/img/hatille-wordmark-gold.svg" alt="Hatille" style="height:26px;margin-bottom:24px">
           <p style="max-width:340px;font-size:14px">Fashion · Health · Wellness. Style is how you take care of yourself, made visible.</p>
           <p style="font-size:14px">Toronto, Ontario, Canada</p></div>
         <div><h4>Explore</h4>${HATILLE.nav.slice(0, 4).map(([t, h]) => `<a href="${h}">${t}</a>`).join('')}</div>
