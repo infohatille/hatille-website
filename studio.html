@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Consult Studio · Hatille</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/img/hatille-icon-black.svg">
+<meta name="theme-color" content="#0c0b0a">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital@1&family=Poppins:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  body{background:#0c0b0a;color:#fff}
+  .studio{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:24px;max-width:1500px;margin:0 auto;padding:24px}
+  .stage{display:grid;grid-template-columns:1fr;gap:12px;align-content:start}
+  .stage.compare{grid-template-columns:1fr 1fr}
+  .stage canvas{width:100%;height:auto;display:block;background:#d9d4cc;cursor:grab;touch-action:none}
+  .cv{position:relative}
+  .cap{position:absolute;top:12px;left:12px;font:500 11px var(--sans);letter-spacing:.2em;text-transform:uppercase;background:rgba(12,11,10,.75);color:#fff;padding:6px 10px}
+  .brand{position:absolute;right:12px;bottom:12px;font:300 13px var(--sans);letter-spacing:.32em;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+  .panel{background:#141210;border:1px solid var(--line-dark);padding:22px;align-self:start;position:sticky;top:20px;max-height:calc(100vh - 40px);overflow:auto}
+  .panel h4{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-light);margin:22px 0 10px;font-weight:500}
+  .panel h4:first-child{margin-top:0}
+  .row{display:flex;gap:8px;flex-wrap:wrap}
+  .sbtn{background:transparent;color:#e9e3d8;border:1px solid #3a352f;padding:9px 12px;font:500 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
+  .sbtn:hover,.sbtn.on{border-color:var(--gold);color:var(--gold-light)}
+  .sbtn.gold{background:var(--gold);border-color:var(--gold);color:#0c0b0a}
+  .sw{display:grid;grid-template-columns:repeat(10,1fr);gap:5px}
+  .sw button{aspect-ratio:1;border:1px solid rgba(255,255,255,.15);cursor:pointer;padding:0}
+  .sw button.on{outline:2px solid #fff;outline-offset:1px}
+  select,textarea,input[type=email],input[type=text]{width:100%;background:#0c0b0a;color:#fff;border:1px solid #3a352f;padding:10px;font:400 14px var(--sans)}
+  textarea{min-height:90px;resize:vertical}
+  input[type=range]{width:100%}
+  .res{font-size:13px;color:#cfc8bc;line-height:1.7}
+  .res b{color:#fff;font-weight:500}
+  .live{width:100%;background:#000;display:none;margin-bottom:8px}
+  .tip{font-size:12px;color:#a39d94;line-height:1.6;margin-top:8px}
+  .top{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;border-bottom:1px solid var(--line-dark)}
+  .top img{height:20px}
+  body.present .panel,body.present .top{display:none}
+  body.present .studio{grid-template-columns:1fr;max-width:none}
+  .exit{display:none;position:fixed;right:16px;top:16px;z-index:9}
+  body.present .exit{display:block}
+  .drop{border:1px dashed #3a352f;padding:60px 20px;text-align:center;color:#a39d94;font-size:14px}
+  .roomv{width:100%;aspect-ratio:4/3;object-fit:cover;background:#000;display:block}
+  .selfv{width:34%;aspect-ratio:4/3;object-fit:cover;background:#000;transform:scaleX(-1);border:1px solid #3a352f}
+  .knock{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1px solid var(--gold);padding:10px;margin-top:10px;font-size:13px}
+  .rstat{font-size:13px;color:var(--gold-light);margin-top:10px;min-height:18px}
+  .sbtn.red{border-color:#a3473a;color:#f1c4bc}
+  @media (max-width:1000px){.studio{grid-template-columns:1fr}.panel{position:static;max-height:none}}
+</style>
+</head>
+<body>
+<div class="top"><a href="/"><img src="assets/img/hatille-wordmark-gold.svg" alt="Hatille"></a><span class="eyebrow" style="font-size:11px">Consult Studio · private</span></div>
+<button class="sbtn gold exit" id="exitPresent">Exit present mode</button>
+<div class="studio">
+  <div>
+    <div class="drop" id="drop">Open your <b>Live room</b>, let your client in, then press <b>Snap client</b> to begin.<br><br>Your client sees every drape live in their room at hatille.com/room. No screen-sharing needed.</div>
+    <div class="stage hidden" id="stage">
+      <div class="cv"><canvas id="ca" width="600" height="760"></canvas><span class="cap" id="capA"></span><span class="brand">HATILLE</span></div>
+      <div class="cv hidden" id="wrapB"><canvas id="cb" width="600" height="760"></canvas><span class="cap" id="capB"></span><span class="brand">HATILLE</span></div>
+    </div>
+  </div>
+
+  <aside class="panel">
+    <h4>Live room</h4>
+    <div class="row"><button class="sbtn gold" id="roomBtn">Open room</button><button class="sbtn" id="copyLink">Copy client link</button></div>
+    <div class="rstat" id="rstat">Room closed. Clients join at hatille.com/room</div>
+    <div id="knocks"></div>
+    <div id="inSession" class="hidden" style="margin-top:12px">
+      <video class="roomv" id="clientV" autoplay playsinline></video>
+      <div style="display:flex;gap:10px;align-items:flex-start;margin-top:8px">
+        <video class="selfv" id="hostSelf" autoplay muted playsinline></video>
+        <div class="row" style="flex:1">
+          <button class="sbtn gold" id="snapClient">Snap client</button>
+          <button class="sbtn on" id="showDrapes">Client sees drapes: on</button>
+        </div>
+      </div>
+      <div class="row" style="margin-top:8px"><button class="sbtn" id="hMic">Mute</button><button class="sbtn" id="hCam">Camera off</button><button class="sbtn red" id="endSess">End session</button></div>
+      <p class="tip">"Client sees drapes" switches your client's screen between your camera and the live drapes. They always hear you and see you in the corner.</p>
+    </div>
+
+    <h4>1 · Client photo</h4>
+    <video class="live" id="live" autoplay muted playsinline></video>
+    <div class="row">
+      <button class="sbtn" id="capBtn">Capture from another app</button>
+      <button class="sbtn hidden" id="snapBtn">Snap frame</button>
+      <button class="sbtn" id="upBtn">Upload photo</button>
+      <input type="file" id="file" accept="image/*" class="hidden">
+    </div>
+    <p class="tip">In your Live room, use <b>Snap client</b> above. If a call is on Zoom or another app instead, "Capture from another app" lets you pick that window, then press Snap frame. Nothing is uploaded or saved.</p>
+    <h4>2 · Frame</h4>
+    <label class="res" for="zoom">Zoom</label><input type="range" id="zoom" min="0.6" max="3" step="0.01" value="1">
+    <p class="tip">Drag the photo to centre the face above the drape.</p>
+
+    <h4>3 · Skin reading</h4>
+    <div class="row"><button class="sbtn" id="pickBtn">Tap cheek to read</button></div>
+    <div class="res" id="skinOut" style="margin-top:10px"></div>
+
+    <h4>4 · Side-by-side tests</h4>
+    <div class="row" id="tests"></div>
+    <div class="row" style="margin-top:8px"><button class="sbtn" id="single">Single view</button></div>
+
+    <h4>5 · Seasons</h4>
+    <select id="seasonA"></select>
+    <div class="sw" id="palA" style="margin-top:10px"></div>
+    <div class="res" id="seasonInfo" style="margin-top:10px"></div>
+    <label class="res" style="display:block;margin-top:12px">Compare with</label>
+    <select id="seasonB"><option value="">—</option></select>
+    <div class="sw" id="palB" style="margin-top:10px"></div>
+
+    <h4>6 · Any colour</h4>
+    <div class="row" style="align-items:center"><input type="color" id="custom" value="#b08d57" style="width:54px;height:36px;padding:0;border:0;background:none"><button class="sbtn" id="sheen">Metallic: off</button></div>
+
+    <h4>7 · Session notes</h4>
+    <input type="text" id="cname" placeholder="Client name">
+    <input type="email" id="cemail" placeholder="Client email" style="margin-top:8px">
+    <textarea id="notes" placeholder="Notes for your client: best colours, what to avoid, next steps…" style="margin-top:8px"></textarea>
+    <div class="row" style="margin-top:10px"><button class="sbtn" id="copy">Copy summary</button><button class="sbtn" id="email">Email summary</button><button class="sbtn" id="save">Save image</button></div>
+
+    <h4>Present</h4>
+    <div class="row"><button class="sbtn gold" id="present">Present mode</button></div>
+    <p class="tip">Hides these controls so your client only sees the drapes. Use the keyboard while presenting: ← → to change colours, Esc to exit.</p>
+  </aside>
+</div>
+<script src="assets/colour.js"></script>
+<script src="assets/vendor/peerjs.min.js"></script>
+<script src="assets/room.js"></script>
+<script>
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const A = new Drape($('#ca')), B = new Drape($('#cb'));
+let img = null, skin = null, stream = null, seasonA = null, palIdx = 0;
+const sync = (from, to) => { to.zoom = from.zoom; to.ox = from.ox; to.oy = from.oy; to.draw(); };
+A.onMove = () => sync(A, B); B.onMove = () => sync(B, A);
+function compare(on) { $('#stage').classList.toggle('compare', on); $('#wrapB').classList.toggle('hidden', !on); }
+function setImage(i) {
+  img = i; A.setImage(i); B.setImage(i); A.zoom = 1.15; A.oy = A.c.height * 0.12; A.color = '#8a8580'; A.draw(); sync(A, B);
+  $('#drop').classList.add('hidden'); $('#stage').classList.remove('hidden'); $('#capA').textContent = 'Neutral drape';
+}
+
+/* capture a frame from the video call window (screen capture, stays on this computer) */
+$('#capBtn').onclick = async () => {
+  try {
+    stream = await navigator.mediaDevices.getDisplayMedia({ video: { frameRate: 15 }, audio: false });
+    $('#live').srcObject = stream; $('#live').style.display = 'block'; $('#snapBtn').classList.remove('hidden');
+    stream.getVideoTracks()[0].onended = stopCap;
+  } catch (e) { alert('Screen capture was cancelled or is not supported in this browser. Use Chrome or Edge on a computer, or upload a photo instead.'); }
+};
+function stopCap() { if (stream) stream.getTracks().forEach(t => t.stop()); stream = null; $('#live').style.display = 'none'; $('#snapBtn').classList.add('hidden'); }
+function snapFrom(v) {
+  if (!v.videoWidth) return false;
+  const c = document.createElement('canvas'); c.width = v.videoWidth; c.height = v.videoHeight; c.getContext('2d').drawImage(v, 0, 0);
+  const i = new Image(); i.onload = () => setImage(i); i.src = c.toDataURL('image/jpeg', .92); return true;
+}
+$('#snapBtn').onclick = () => { if (snapFrom($('#live'))) stopCap(); };
+$('#upBtn').onclick = () => $('#file').click();
+$('#file').onchange = e => { const f = e.target.files[0]; if (!f) return; const i = new Image(); i.onload = () => setImage(i); i.src = URL.createObjectURL(f); };
+$('#zoom').oninput = e => { A.zoom = +e.target.value; A.draw(); sync(A, B); };
+
+/* skin reading */
+$('#pickBtn').onclick = () => { if (!img) return; A.picking = true; $('#ca').style.cursor = 'crosshair'; $('#capA').textContent = 'Tap the cheek'; compare(false); };
+A.onPick = (rgb, px, py) => {
+  if (!rgb) return; skin = analyseSkin(rgb); A.picking = false; $('#ca').style.cursor = 'grab'; A.draw();
+  $('#skinOut').innerHTML = `<div style="display:flex;gap:12px;align-items:center"><span style="width:38px;height:38px;border-radius:50%;background:${toHex(rgb)}"></span><span>${toHex(rgb).toUpperCase()}</span></div>
+    Undertone <b>${skin.undertone}</b> · Depth <b>${skin.depth}</b> · Clarity <b>${skin.clarity}</b><br>Suggested start: <b>${seasonFrom(skin, {})}</b>`;
+  $('#capA').textContent = 'Skin read';
+};
+
+/* side-by-side tests */
+$('#tests').innerHTML = DRAPE_TESTS.map((t, i) => `<button class="sbtn" data-i="${i}">${t.q.replace('?', '')}</button>`).join('');
+$('#tests').onclick = e => {
+  const b = e.target.closest('button'); if (!b || !img) return; const t = DRAPE_TESTS[+b.dataset.i];
+  $$('#tests button').forEach(x => x.classList.toggle('on', x === b));
+  compare(true); A.color = t.a.hex; A.sheen = !!t.a.sheen; B.color = t.b.hex; B.sheen = !!t.b.sheen; sync(A, B); A.draw(); B.draw();
+  $('#capA').textContent = 'A · ' + t.a.name; $('#capB').textContent = 'B · ' + t.b.name;
+};
+$('#single').onclick = () => compare(false);
+
+/* seasons */
+const names = Object.keys(SEASONS);
+$('#seasonA').innerHTML = names.map(n => `<option>${n}</option>`).join('');
+$('#seasonB').innerHTML += names.map(n => `<option>${n}</option>`).join('');
+function pal(el, name, D, cap) {
+  const s = SEASONS[name];
+  el.innerHTML = s.colors.map((c, i) => `<button style="background:${c}" data-c="${c}" data-i="${i}" title="${c}"></button>`).join('');
+  el.onclick = e => { const b = e.target.closest('button'); if (!b || !img) return; [...el.children].forEach(x => x.classList.toggle('on', x === b)); D.color = b.dataset.c; D.sheen = false; D.draw(); cap.textContent = name; if (D === A) palIdx = +b.dataset.i; };
+}
+function showA(name) {
+  seasonA = name; const s = SEASONS[name]; pal($('#palA'), name, A, $('#capA'));
+  $('#seasonInfo').innerHTML = `<b>${s.family}</b> · ${s.desc}<br>Best metals: <b>${s.metals}</b>`;
+  if (img) { A.color = s.colors[0]; A.sheen = false; A.draw(); $('#capA').textContent = name; $('#palA').children[0].classList.add('on'); palIdx = 0; }
+}
+$('#seasonA').onchange = e => showA(e.target.value);
+$('#seasonB').onchange = e => {
+  const n = e.target.value; if (!n) { $('#palB').innerHTML = ''; compare(false); return; }
+  pal($('#palB'), n, B, $('#capB')); if (img) { compare(true); sync(A, B); B.color = SEASONS[n].colors[0]; B.sheen = false; B.draw(); $('#capB').textContent = n; }
+};
+showA(names[0]);
+
+/* custom colour */
+$('#custom').oninput = e => { if (!img) return; A.color = e.target.value; A.draw(); $('#capA').textContent = e.target.value.toUpperCase(); };
+$('#sheen').onclick = () => { A.sheen = !A.sheen; $('#sheen').textContent = 'Metallic: ' + (A.sheen ? 'on' : 'off'); A.draw(); };
+
+/* summary */
+function summary() {
+  const s = SEASONS[seasonA];
+  return `Hatille colour consultation${$('#cname').value ? ' for ' + $('#cname').value : ''}\n\n` +
+    `Your season: ${seasonA} (${s.family})\n${s.desc}\nBest metals: ${s.metals}\nYour colours: ${s.colors.join(', ')}\n` +
+    (skin ? `Skin reading: ${skin.undertone} undertone, ${skin.depth} depth, ${skin.clarity} clarity\n` : '') +
+    ($('#notes').value ? `\nNotes from your consultant:\n${$('#notes').value}\n` : '') +
+    `\nThank you for your session.\nHatille Consultations\nhatille.com · info.hatille@gmail.com`;
+}
+$('#copy').onclick = async () => { try { await navigator.clipboard.writeText(summary()); $('#copy').textContent = 'Copied ✓'; setTimeout(() => $('#copy').textContent = 'Copy summary', 1500); } catch (e) { prompt('Copy this summary:', summary()); } };
+$('#email').onclick = () => { location.href = 'mailto:' + encodeURIComponent($('#cemail').value) + '?subject=' + encodeURIComponent('Your Hatille colour palette: ' + seasonA) + '&body=' + encodeURIComponent(summary()); };
+$('#save').onclick = () => { if (!img) return; const a = document.createElement('a'); a.download = 'hatille-drape.png'; a.href = $('#ca').toDataURL('image/png'); a.click(); };
+
+/* present mode */
+$('#present').onclick = () => { document.body.classList.add('present'); document.documentElement.requestFullscreen && document.documentElement.requestFullscreen().catch(() => {}); };
+const exitP = () => { document.body.classList.remove('present'); if (document.fullscreenElement) document.exitFullscreen(); };
+$('#exitPresent').onclick = exitP;
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') exitP();
+  if (!img || !seasonA || !['ArrowRight', 'ArrowLeft'].includes(e.key) || /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) return;
+  const c = SEASONS[seasonA].colors; palIdx = (palIdx + (e.key === 'ArrowRight' ? 1 : -1) + c.length) % c.length;
+  A.color = c[palIdx]; A.sheen = false; A.draw(); $('#capA').textContent = seasonA; [...$('#palA').children].forEach((x, i) => x.classList.toggle('on', i === palIdx));
+});
+
+/* ---------- Live room (host side) ---------- */
+const bc = document.createElement('canvas'); bc.width = 1280; bc.height = 760; const bx = bc.getContext('2d');
+let bstream = null, hpeer = null, hlocal = null, client = null, showDrapes = true; const queue = [];
+function paintBroadcast() {
+  bx.fillStyle = '#0c0b0a'; bx.fillRect(0, 0, 1280, 760);
+  const cap = (t, x) => { if (!t) return; bx.font = '500 18px Poppins, sans-serif'; const w = bx.measureText(t.toUpperCase()).width + 28; bx.fillStyle = 'rgba(12,11,10,.78)'; bx.fillRect(x + 14, 14, w, 38); bx.fillStyle = '#fff'; bx.fillText(t.toUpperCase(), x + 28, 40); };
+  if (!img) {
+    bx.fillStyle = '#c9a96e'; bx.textAlign = 'center'; bx.font = '300 54px Poppins, sans-serif'; bx.fillText('H A T I L L E', 640, 360);
+    bx.fillStyle = '#a39d94'; bx.font = '300 22px Poppins, sans-serif'; bx.fillText('Your colour drapes will appear here', 640, 410); bx.textAlign = 'left'; return;
+  }
+  const two = $('#stage').classList.contains('compare');
+  if (two) { bx.drawImage($('#ca'), 32, 0, 600, 760); bx.drawImage($('#cb'), 648, 0, 600, 760); cap($('#capA').textContent, 32); cap($('#capB').textContent, 648); }
+  else { bx.drawImage($('#ca'), 340, 0, 600, 760); cap($('#capA').textContent, 340); }
+  bx.fillStyle = '#fff'; bx.font = '300 18px Poppins, sans-serif'; bx.fillText('H A T I L L E', 1100, 735);
+}
+setInterval(paintBroadcast, 66);
+const rstat = t => $('#rstat').textContent = t;
+function renderKnocks() {
+  $('#knocks').innerHTML = queue.map((q, i) => `<div class="knock"><span><b>${q.name.replace(/[<>&"]/g, '')}</b> is waiting</span><span class="row"><button class="sbtn gold" data-a="${i}">Let in</button><button class="sbtn" data-d="${i}">Decline</button></span></div>`).join('');
+}
+$('#knocks').onclick = e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.a !== undefined) { const q = queue.splice(+b.dataset.a, 1)[0]; renderKnocks(); admit(q); }
+  if (b.dataset.d !== undefined) { const q = queue.splice(+b.dataset.d, 1)[0]; renderKnocks(); try { q.conn.send({ t: 'decline' }); } catch (x) {} }
+};
+async function openRoom() {
+  rstat('Opening room…');
+  try { hlocal = await navigator.mediaDevices.getUserMedia(HROOM.media); }
+  catch (e) { try { hlocal = await navigator.mediaDevices.getUserMedia({ video: true, audio: true }); } catch (e2) { rstat('Please allow camera and microphone, then try again.'); return; } }
+  $('#hostSelf').srcObject = hlocal;
+  hpeer = new Peer(HROOM.hostId, HROOM.peerOptions);
+  hpeer.on('open', () => { rstat('Room open. Waiting for your client…'); $('#roomBtn').textContent = 'Close room'; $('#roomBtn').classList.remove('gold'); });
+  hpeer.on('error', err => {
+    if (err.type === 'unavailable-id') { rstat('Your room is already open in another tab or window. Close it there first.'); closeRoom(); }
+    else if (err.type !== 'peer-unavailable') rstat('Connection problem (' + err.type + '). Trying again…');
+  });
+  hpeer.on('disconnected', () => { if (hpeer && !hpeer.destroyed) setTimeout(() => hpeer && !hpeer.destroyed && hpeer.reconnect(), 2000); });
+  hpeer.on('connection', conn => {
+    const name = String((conn.metadata || {}).name || 'Client').slice(0, 60);
+    conn.on('open', () => { queue.push({ conn, name }); renderKnocks(); rstat(name + ' is waiting'); try { new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=').play().catch(() => {}); } catch (x) {} });
+    conn.on('data', d => { if (d && d.t === 'leave') { if (client && client.conn === conn) endSession(false, client.name + ' left the session.'); else { const i = queue.findIndex(q => q.conn === conn); if (i > -1) { queue.splice(i, 1); renderKnocks(); } } } });
+    conn.on('close', () => { const i = queue.findIndex(q => q.conn === conn); if (i > -1) { queue.splice(i, 1); renderKnocks(); } if (client && client.conn === conn) endSession(false, client.name + ' disconnected.'); });
+  });
+}
+function admit(q) {
+  if (client) endSession(true);
+  client = { conn: q.conn, name: q.name };
+  q.conn.send({ t: 'admit' });
+  client.cam = hpeer.call(q.conn.peer, hlocal, { metadata: { kind: 'cam' } });
+  client.cam.on('stream', s => { $('#clientV').srcObject = s; });
+  if (!bstream) { bstream = bc.captureStream(15); try { bstream.getVideoTracks()[0].contentHint = 'detail'; } catch (x) {} }
+  client.studio = hpeer.call(q.conn.peer, bstream, { metadata: { kind: 'studio' } });
+  setTimeout(() => client && client.conn.send({ t: 'studio', on: showDrapes }), 800);
+  $('#inSession').classList.remove('hidden'); rstat('In session with ' + q.name);
+  if (!$('#cname').value) $('#cname').value = q.name;
+}
+function endSession(notify, msg) {
+  if (!client) return;
+  if (notify) try { client.conn.send({ t: 'end' }); } catch (x) {}
+  ['cam', 'studio'].forEach(k => { try { client[k] && client[k].close(); } catch (x) {} });
+  setTimeout(((c) => () => { try { c.close(); } catch (x) {} })(client.conn), 500);
+  client = null; $('#clientV').srcObject = null; $('#inSession').classList.add('hidden');
+  rstat(msg || (hpeer && !hpeer.destroyed ? 'Session ended. Room still open.' : 'Room closed.'));
+}
+function closeRoom() {
+  endSession(true); queue.splice(0).forEach(q => { try { q.conn.send({ t: 'decline' }); q.conn.close(); } catch (x) {} }); renderKnocks();
+  if (hpeer) hpeer.destroy(); hpeer = null;
+  if (hlocal) hlocal.getTracks().forEach(t => t.stop()); hlocal = null;
+  $('#roomBtn').textContent = 'Open room'; $('#roomBtn').classList.add('gold');
+  if (!/already open/.test($('#rstat').textContent)) rstat('Room closed. Clients join at hatille.com/room');
+}
+$('#roomBtn').onclick = () => hpeer ? closeRoom() : openRoom();
+$('#copyLink').onclick = async () => { const u = location.origin + '/room'; try { await navigator.clipboard.writeText(u); $('#copyLink').textContent = 'Copied ✓'; setTimeout(() => $('#copyLink').textContent = 'Copy client link', 1500); } catch (e) { prompt('Client link:', u); } };
+$('#snapClient').onclick = () => { if (!snapFrom($('#clientV'))) rstat('Waiting for your client\'s video…'); };
+$('#showDrapes').onclick = () => { showDrapes = !showDrapes; $('#showDrapes').textContent = 'Client sees drapes: ' + (showDrapes ? 'on' : 'off'); $('#showDrapes').classList.toggle('on', showDrapes); if (client) client.conn.send({ t: 'studio', on: showDrapes }); };
+$('#hMic').onclick = () => { if (!hlocal) return; const t = hlocal.getAudioTracks()[0]; if (!t) return; t.enabled = !t.enabled; $('#hMic').textContent = t.enabled ? 'Mute' : 'Unmute'; };
+$('#hCam').onclick = () => { if (!hlocal) return; const t = hlocal.getVideoTracks()[0]; if (!t) return; t.enabled = !t.enabled; $('#hCam').textContent = t.enabled ? 'Camera off' : 'Camera on'; };
+$('#endSess').onclick = () => endSession(true);
+window.addEventListener('beforeunload', e => { if (client) { e.preventDefault(); e.returnValue = ''; } });
+window.addEventListener('unload', () => { if (client) try { client.conn.send({ t: 'end' }); } catch (x) {} });
+</script>
+</body>
+</html>

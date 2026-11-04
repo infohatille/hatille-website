@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book a Consultation · Hatille</title>
+<meta name="description" content="Book a virtual consultation with a Hatille consultant: personal style, colour analysis or alteration advice. Free 15-minute discovery call, 30 minutes for $30, 1 hour for $60 CAD, taxes included.">
+<link rel="icon" href="assets/img/hatille-icon-black.svg">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<meta name="theme-color" content="#0c0b0a">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hatille">
+<meta property="og:title" content="Book a Consultation · Hatille">
+<meta property="og:description" content="Virtual consultations for personal style, colour analysis and alterations. Free 15-minute discovery call.">
+<meta property="og:url" content="https://hatille.com/book">
+<link rel="canonical" href="https://hatille.com/book">
+<meta property="og:image" content="https://hatille.com/assets/img/ph/sketches.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital@1&family=Poppins:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .topics{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+  .topics .ph-frame{aspect-ratio:4/3;margin-bottom:22px}
+  @media (max-width:900px){.topics{grid-template-columns:1fr}}
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;counter-reset:s}
+  .flow div{border-top:1px solid var(--line-dark);padding-top:22px}
+  .flow span{display:block;color:var(--gold-light);font-size:12px;letter-spacing:.22em;margin-bottom:10px}
+  .flow p{color:#d9d2c6;margin:8px 0 0;font-size:15px;line-height:1.7}
+  @media (max-width:900px){.flow{grid-template-columns:1fr 1fr}}
+  .prep{display:grid;grid-template-columns:1fr 1fr;gap:12px 40px;list-style:none;padding:0;margin:30px 0 0}
+  .prep li{padding:14px 0;border-bottom:1px solid var(--line);font-size:15px}
+  .prep b{font-weight:500}
+  @media (max-width:700px){.prep{grid-template-columns:1fr}}
+  .faq details{border-bottom:1px solid var(--line);padding:20px 0}
+  .faq summary{cursor:pointer;font-size:18px;list-style:none}
+  .faq summary::after{content:"+";float:right;color:var(--gold)}
+  .faq details[open] summary::after{content:"–"}
+  .faq p{margin:12px 0 0;color:#5f5a52;line-height:1.75}
+  .soonnote{display:none;margin-top:14px;font-size:13px}
+  .plan .soonnote{color:inherit;opacity:.8}
+</style>
+</head>
+<body>
+<main>
+  <section class="page-hero dark photo" style="--img:url(/assets/img/ph/sketches.jpg)">
+    <div class="wrap">
+      <div class="eyebrow">Virtual consultations</div>
+      <h1 style="margin-top:22px">Book time with a <em class="gold-l">Hatille consultant</em>.</h1>
+      <p class="lead">One-to-one video consultations for personal style, colour analysis and alterations, from anywhere. Start with a free 15-minute discovery call.</p>
+      <div style="margin-top:34px;display:flex;gap:14px;flex-wrap:wrap"><a class="btn" href="#plans" style="background:var(--gold);border-color:var(--gold);color:#0c0b0a">See consultations</a><a class="btn ghost" href="#how" style="color:#fff;border-color:rgba(255,255,255,.7)">How it works</a></div>
+    </div>
+  </section>
+
+  <section class="section" id="plans">
+    <div class="wrap">
+      <div class="num" style="margin-bottom:16px">CHOOSE YOUR SESSION</div>
+      <h2 style="margin-bottom:14px">Simple, <em class="gold-d">all-inclusive</em> pricing.</h2>
+      <p class="lead muted" style="margin-bottom:50px;max-width:640px">Prices are in Canadian dollars and include all taxes. Pay securely when you book.</p>
+      <div class="plans">
+        <article class="plan">
+          <div class="len">15 minutes</div>
+          <h3>Discovery call</h3>
+          <p class="muted">Meet your consultant, share what you need, and find the right session for you.</p>
+          <div class="price">Free</div>
+          <div class="tax">No payment needed</div>
+          <ul><li>Quick style or fit question</li><li>Find the right next step</li><li>Video call in your browser</li></ul>
+          <a class="btn ghost book" data-plan="free" href="#">Book a free call</a>
+          <p class="soonnote">Online booking opens very soon. Until then, email info.hatille@gmail.com.</p>
+        </article>
+        <article class="plan feat">
+          <span class="ribbon">Most popular</span>
+          <div class="len">30 minutes</div>
+          <h3>Consultation</h3>
+          <p class="muted">Focused advice on one topic: your colours, a style question or an alteration.</p>
+          <div class="price">$30<small>CAD</small></div>
+          <div class="tax">Taxes included</div>
+          <ul><li>Colour analysis, style or alterations</li><li>Live colour draping on camera</li><li>Written summary by email</li></ul>
+          <a class="btn book" data-plan="s30" href="#" style="background:var(--gold);border-color:var(--gold);color:#0c0b0a">Book 30 minutes</a>
+          <p class="soonnote">Online booking opens very soon. Until then, email info.hatille@gmail.com.</p>
+        </article>
+        <article class="plan">
+          <div class="len">1 hour</div>
+          <h3>Full session</h3>
+          <p class="muted">A complete colour analysis with your season, plus style and fit advice.</p>
+          <div class="price">$60<small>CAD</small></div>
+          <div class="tax">Taxes included</div>
+          <ul><li>Full 12-season colour analysis</li><li>Personal style and wardrobe plan</li><li>Alteration advice for your pieces</li><li>Your palette and notes by email</li></ul>
+          <a class="btn ghost book" data-plan="s60" href="#">Book 1 hour</a>
+          <p class="soonnote">Online booking opens very soon. Until then, email info.hatille@gmail.com.</p>
+        </article>
+      </div>
+      <p class="note" style="margin-top:24px">🔒 Payments are processed securely by Stripe. Hatille never sees or stores your card details.</p>
+    </div>
+  </section>
+
+  <section class="section beige">
+    <div class="wrap">
+      <div class="num" style="margin-bottom:16px">WHAT WE CAN TALK ABOUT</div>
+      <h2 style="margin-bottom:46px">Three ways to <em class="gold-d">feel your best</em>.</h2>
+      <div class="topics">
+        <div><div class="ph-frame"><img src="assets/img/ph/silk-monogram.jpg" alt="Champagne silk with a gold monogram" loading="lazy"></div><div class="num">COLOUR ANALYSIS</div><h3 style="margin:14px 0 10px">Find your season</h3><p class="muted">Your consultant drapes colours around your face live on camera, reads your undertone and shows you the palette that makes your skin glow.</p></div>
+        <div><div class="ph-frame"><img src="assets/img/ph/garment-rail.jpg" alt="Ivory and black garments on a gold rail" loading="lazy"></div><div class="num">PERSONAL STYLE</div><h3 style="margin:14px 0 10px">Dress for your life</h3><p class="muted">Shapes for your body, a capsule that works every morning, and outfits for interviews, events and your everyday.</p></div>
+        <div><div class="ph-frame"><img src="assets/img/ph/ivory-gown.jpg" alt="Ivory draped gown on a dress form" loading="lazy"></div><div class="num">ALTERATIONS</div><h3 style="margin:14px 0 10px">Get the perfect fit</h3><p class="muted">Show a piece on camera and learn what to change, what to ask your tailor, what it should cost and who to go to in Ontario.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark" id="how">
+    <div class="wrap">
+      <div class="num" style="margin-bottom:16px">HOW IT WORKS</div>
+      <h2 style="margin-bottom:46px">From booking to <em class="gold-l">your call</em>.</h2>
+      <div class="flow">
+        <div><span>01</span><h4>Choose a time</h4><p>Pick your session and a time that suits you. Times show in your own time zone.</p></div>
+        <div><span>02</span><h4>Pay securely</h4><p>Paid sessions are paid by card at booking through Stripe. The discovery call is free.</p></div>
+        <div><span>03</span><h4>Get your link</h4><p>You'll receive a confirmation email with your private video link and a reminder before the call.</p></div>
+        <div><span>04</span><h4>Join the call</h4><p>Open the link in your browser at the time of your session. No app or download needed.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="num" style="margin-bottom:16px">FOR COLOUR ANALYSIS</div>
+      <h2>How to <em class="gold-d">prepare</em>.</h2>
+      <ul class="prep">
+        <li><b>Daylight.</b> Sit facing a window. Avoid warm lamps and ring lights.</li>
+        <li><b>Bare or light makeup.</b> So your true skin tone shows.</li>
+        <li><b>Hair back.</b> Pull hair away from your face if you can.</li>
+        <li><b>Plain top.</b> Wear white or light grey, no prints.</li>
+        <li><b>Camera at eye level.</b> A laptop or propped-up phone works best.</li>
+        <li><b>Quiet space.</b> And a good Wi-Fi connection.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section beige">
+    <div class="wrap" style="max-width:860px">
+      <div class="num" style="margin-bottom:16px">GOOD TO KNOW</div>
+      <h2 style="margin-bottom:30px">Questions</h2>
+      <div class="faq">
+        <details><summary>Do prices include tax?</summary><p>Yes. The price you see is the total you pay, in Canadian dollars, with all taxes included.</p></details>
+        <details><summary>Is my payment secure?</summary><p>Payments are handled by Stripe, a certified payment processor. Your card details go straight to Stripe over an encrypted connection; Hatille never sees or stores them.</p></details>
+        <details><summary>What do I need for the call?</summary><p>A phone, tablet or computer with a camera and a modern browser (Chrome, Safari, Edge or Firefox). You'll join from the link in your confirmation email.</p></details>
+        <details><summary>Can I reschedule or cancel?</summary><p>Yes. Use the link in your confirmation email to reschedule or cancel up to 24 hours before your session for a full refund. Sessions cancelled with less notice may not be refunded.</p></details>
+        <details><summary>Is the call recorded?</summary><p>No. Calls are not recorded. Any photos taken during colour analysis are used only during your session to show drapes, and are not saved.</p></details>
+      </div>
+      <p class="muted" style="margin-top:30px">Other questions? <a href="/contact" style="color:var(--gold-deep)">Contact us</a>.</p>
+    </div>
+  </section>
+</main>
+<script src="assets/site.js"></script>
+<script>
+  // Booking links live in assets/site.js (HATILLE.booking). Until they're added, buttons point to email.
+  const B = HATILLE.booking || {};
+  document.querySelectorAll('.book').forEach(a => {
+    const url = B[a.dataset.plan];
+    if (url) { a.href = url; a.target = '_blank'; a.rel = 'noopener'; }
+    else {
+      const sub = { free: 'Free 15-minute discovery call', s30: '30-minute consultation', s60: '1-hour session' }[a.dataset.plan];
+      a.href = 'mailto:' + HATILLE.email + '?subject=' + encodeURIComponent('Booking request: ' + sub);
+      a.parentElement.querySelector('.soonnote').style.display = 'block';
+    }
+  });
+</script>
+</body>
+</html>

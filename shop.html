@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shop · Hatille</title>
+<meta name="description" content="Hatille handmade bridal: veils, gold and pearl hair pieces, hand-painted champagne flutes and framed keepsake glass in gold, black and white. Coming soon.">
+<link rel="icon" href="assets/img/hatille-icon-black.svg">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<meta name="theme-color" content="#0c0b0a">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hatille">
+<meta property="og:title" content="Shop · Hatille">
+<meta property="og:description" content="Hatille handmade bridal: veils, gold and pearl hair pieces, hand-painted champagne flutes and framed keepsake glass in gold, black and white. Coming soon.">
+<meta property="og:url" content="https://hatille.com/shop">
+<link rel="canonical" href="https://hatille.com/shop">
+<meta property="og:image" content="https://hatille.com/assets/img/ph/cathedral-veil.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital@1&family=Poppins:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .soon{position:relative;min-height:80vh;display:flex;align-items:center;overflow:hidden;background:url(assets/img/hatille-print-black-tonal.svg) 0 0/140px 140px #0c0b0a;color:#fff}
+  .soon .wrap{position:relative;z-index:2;text-align:center}
+  .soon::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 50% 55% at 50% 50%,#0c0b0a 45%,rgba(12,11,10,.4) 100%)}
+  .count{display:flex;gap:40px;justify-content:center;margin:40px 0}
+  .soon.photo{background:radial-gradient(ellipse 60% 70% at 50% 50%,rgba(12,11,10,.86) 30%,rgba(12,11,10,.62) 100%),url(assets/img/ph/veil-lace.jpg) center/cover #0c0b0a}
+  .soon.photo::after{display:none}
+  .prod{display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:center;padding:70px 0;border-top:1px solid var(--line)}
+  .prod:first-child{border-top:0;padding-top:20px}
+  .prod.flip .gal{order:2}
+  .gal .main{aspect-ratio:4/5;overflow:hidden;background:#e9e1d4}
+  .gal .main img{width:100%;height:100%;object-fit:cover;display:block}
+  #hair .gal .main{aspect-ratio:4/3}
+  .gal .thumbs{display:flex;gap:10px;margin-top:10px}
+  .gal .thumbs button{flex:1;aspect-ratio:1;padding:0;border:1px solid transparent;background:none;cursor:pointer;overflow:hidden;opacity:.7;transition:opacity .2s,border-color .2s}
+  .gal .thumbs button.on,.gal .thumbs button:hover{opacity:1;border-color:var(--gold)}
+  .gal .thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+  .prod h3{font-size:clamp(28px,3vw,40px);margin:14px 0 16px}
+  .prod ul{margin:20px 0 26px;padding-left:18px;color:#4a453f;line-height:1.9}
+  @media (max-width:900px){.prod{grid-template-columns:1fr;gap:28px;padding:50px 0}.prod.flip .gal{order:0}}
+  .feature{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:center}
+  .feature .ph-frame{aspect-ratio:1/1}
+  @media (max-width:900px){.feature{grid-template-columns:1fr;gap:30px}}
+  .steps{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:16px}
+  .steps li{display:flex;gap:16px;align-items:baseline}
+  .steps li span{font-size:12px;letter-spacing:.2em;color:var(--gold-deep);min-width:26px}
+  .wl{max-width:560px;margin:40px auto 0;display:flex;flex-wrap:wrap;gap:0}
+  .wl .form-out{flex-basis:100%;text-align:center;color:#fff}
+  .wl .form-out p{color:#e9e3d8}
+  .wl input{flex:1;min-width:0;border-color:var(--gold);background:rgba(12,11,10,.85);color:#fff}
+  .wl input::placeholder{color:#a39d94}
+  @media (max-width:600px){.wl{flex-direction:column;gap:10px}.wl input{flex:none;width:100%}}
+</style>
+</head>
+<body>
+<main>
+  <section class="soon dark photo">
+    <div class="wrap">
+      <div class="eyebrow">The Hatille shop</div>
+      <img src="assets/img/hatille-wordmark-gold.svg" alt="Hatille" style="height:clamp(46px,7vw,92px);margin:34px auto 30px">
+      <h1 style="font-size:clamp(34px,4.6vw,64px)">Handmade bridal pieces, <em class="gold-l">coming soon</em>.</h1>
+      <p class="lead muted" style="margin:24px auto 0">Veils and hair pieces made by hand, and keepsake glass hand-painted in gold, black and white. Join the waitlist for early access and a launch gift.</p>
+      <form class="wl" name="waitlist" method="POST" action="/shop?joined=1" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="waitlist"><input type="hidden" name="bot-field">
+        <label for="wl-email" class="hidden">Email</label>
+        <input id="wl-email" type="email" name="email" placeholder="Your email address" required>
+        <button class="btn" style="white-space:nowrap">Join the waitlist</button>
+        <div class="form-out"></div>
+      </form>
+    </div>
+  </section>
+
+  <section class="section" id="downloads">
+    <div class="wrap">
+      <div class="grid g2" style="align-items:end;margin-bottom:46px">
+        <div><div class="eyebrow">Available now · Digital downloads</div><h2 style="margin-top:18px">Instant downloads, <em class="gold-d">made to keep</em>.</h2></div>
+        <p class="muted">Beautifully designed printable guides and planners. Pay securely, download instantly, and print at home or at a print shop. Prices in Canadian dollars.</p>
+      </div>
+      <div class="season-warn" role="note"><b>Before you buy a colour guide or swatch set</b><p>Your guide is made for the colour season you choose, so it's only as accurate as that choice. If you're not completely sure of your season, <a href="/colour-analysis">take the free colour analysis</a> or, for the most accurate result, <a href="/book">see a Hatille consultant first</a>.</p><p class="fs"><b>All digital downloads are final sale. No refunds or exchanges</b>, including for choosing the wrong season.</p></div>
+      <div class="dl-grid">
+        <article class="dl feat">
+          <div class="pic"><img src="assets/img/products/palette-guide.jpg" alt="Pages of the Hatille Personal Colour Palette Guide for Deep Autumn" loading="lazy"></div>
+          <div class="body">
+            <span class="tag" style="align-self:flex-start">Best seller</span>
+            <h3>Personal Colour Palette Guide</h3>
+            <p class="muted" style="margin:0">Your season's complete guide, personalised with your name. Includes your printable swatch card and swatch fan.</p>
+            <div class="price">$15<small>CAD</small></div>
+            <ul><li>16 signature colours and 6 neutrals, named with hex codes</li><li>Colours to skip, makeup, hair and jewellery</li><li>Outfit formulas and prints for your season</li><li>Wallet swatch card and 5-blade swatch fan</li></ul>
+            <button class="btn" data-buy="palette" style="background:var(--gold);border-color:var(--gold);color:#0c0b0a">Buy the guide · $15</button>
+            <div class="meta">PDF · 7 pages · all 12 seasons available · final sale</div>
+          </div>
+        </article>
+        <article class="dl">
+          <div class="pic"><img src="assets/img/products/swatch-fan.jpg" alt="A printable Hatille swatch fan for Light Summer" loading="lazy"></div>
+          <div class="body">
+            <h3>Swatch Card &amp; Fan</h3>
+            <p class="muted" style="margin:0">Take your colours shopping. A wallet-size swatch card and a 5-blade fan to hold against clothes, fabric and makeup.</p>
+            <div class="price">$10<small>CAD</small></div>
+            <ul><li>22 colours for your season, named</li><li>Credit-card size card with fold and cut marks</li><li>Fan blades with punch holes for a split pin</li></ul>
+            <button class="btn ghost" data-buy="swatch">Buy the swatch set · $10</button>
+            <div class="meta">PDF · print on matte card stock · final sale</div>
+          </div>
+        </article>
+        <article class="dl">
+          <div class="pic"><img src="assets/img/products/bridal-planner.jpg" alt="Pages of the Hatille Bride's Alteration and Wedding Planner" loading="lazy"></div>
+          <div class="body">
+            <h3>Bride's Alteration &amp; Wedding Planner</h3>
+            <p class="muted" style="margin:0">Everything that happens to your gown, from yes-to-the-dress to preservation, plus the checklists that keep your planning calm.</p>
+            <div class="price">$20<small>CAD</small></div>
+            <ul><li>Alteration timeline, 3-fitting tracker and questions to ask</li><li>Alteration costs, bustle guide and budget worksheets</li><li>12-month checklist, vendors, day-of timeline, emergency kit</li><li>Fill it in on screen or print it</li></ul>
+            <button class="btn ghost" data-buy="planner">Buy the planner · $20</button>
+            <div class="meta">Fillable PDF · 14 pages · personalised cover</div>
+          </div>
+        </article>
+        <article class="dl">
+          <div class="pic" style="background:#fff"><img src="assets/img/products/pattern-blocks.jpg" alt="Hatille pattern blocks for tops, dresses, skirts, pants and jackets" loading="lazy"></div>
+          <div class="body">
+            <h3>Custom Pattern Blocks</h3>
+            <p class="muted" style="margin:0">Drafted to your own measurements: tops, dresses, skirts, pants and jackets, for women and men. Print-shop and home-printer files.</p>
+            <div class="price">Free<small>first block</small></div>
+            <ul><li>Your first block is free</li><li>Each additional block is $5, or all 8 for $25</li><li>Exact 1:1 scale with a 10 cm test square</li></ul>
+            <a class="btn ghost" href="/alterations#bodice">Make my pattern block</a>
+            <button class="btn" data-buy="blockset">Get all 8 blocks · $25</button>
+            <div class="meta">PDF · 24×36 in, 36×48 in, Letter or A4</div>
+          </div>
+        </article>
+      </div>
+      <p class="note" style="margin-top:22px">🔒 Secure checkout by Stripe. Your download opens right after payment. Questions or a lost file? Email <a href="mailto:info.hatille@gmail.com" style="color:var(--gold-deep)">info.hatille@gmail.com</a> with your receipt. All digital downloads are final sale and can't be refunded or exchanged.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="num" style="margin-bottom:16px">THE FIRST COLLECTION</div>
+      <h2 style="margin-bottom:18px">Made by hand, <em class="gold-d">made for your day</em>.</h2>
+      <p class="lead muted" style="margin-bottom:30px;max-width:640px">Something to wear, something to toast with and something to keep on the wall for years after the wedding.</p>
+      <div class="prods">
+        <article class="prod" id="veils">
+          <div class="gal"><div class="main"><img src="assets/img/ph/cathedral-veil.jpg" alt="Cathedral veil with floral embroidery displayed on a dress form" loading="lazy"></div><div class="thumbs"><button type="button" class="on" data-src="assets/img/ph/cathedral-veil.jpg" data-alt="Cathedral veil with floral embroidery displayed on a dress form" aria-label="Show: Cathedral veil with floral embroidery displayed on a dress form"><img src="assets/img/ph/t/cathedral-veil.jpg" alt="" loading="lazy"></button><button type="button" class="" data-src="assets/img/ph/bride-veil.jpg" data-alt="Bride from behind in a long embroidered veil" aria-label="Show: Bride from behind in a long embroidered veil"><img src="assets/img/ph/t/bride-veil.jpg" alt="" loading="lazy"></button><button type="button" class="" data-src="assets/img/ph/veil-embroidery.jpg" data-alt="Close-up of floral embroidery on ivory tulle" aria-label="Show: Close-up of floral embroidery on ivory tulle"><img src="assets/img/ph/t/veil-embroidery.jpg" alt="" loading="lazy"></button><button type="button" class="" data-src="assets/img/ph/veil-pearls.jpg" data-alt="Close-up of pearls and gold embroidery on a veil" aria-label="Show: Close-up of pearls and gold embroidery on a veil"><img src="assets/img/ph/t/veil-pearls.jpg" alt="" loading="lazy"></button><button type="button" class="" data-src="assets/img/ph/veil-lace.jpg" data-alt="Lace border along the edge of a long veil" aria-label="Show: Lace border along the edge of a long veil"><img src="assets/img/ph/t/veil-lace.jpg" alt="" loading="lazy"></button></div></div>
+          <div>
+            <div class="num">01 · TO WEAR</div>
+            <h3>Handmade veils</h3>
+            <p class="lead muted">Soft ivory tulle, finished by hand with floral embroidery, lace borders and pearls placed one at a time.</p>
+            <ul><li>Fingertip, chapel and cathedral lengths</li><li>Floral embroidery, lace edge or scattered pearls</li><li>Matched to your gown and colour season</li></ul>
+            <span class="tag">Coming soon</span>
+          </div>
+        </article>
+        <article class="prod flip" id="hair">
+          <div class="gal"><div class="main"><img src="assets/img/ph/hair-accessories.jpg" alt="Gold and pearl bridal hair piece with ivory flowers and gold leaves" loading="lazy"></div><div class="thumbs"><button type="button" class="on" data-src="assets/img/ph/hair-accessories.jpg" data-alt="Gold and pearl bridal hair piece with ivory flowers and gold leaves" aria-label="Show: Gold and pearl bridal hair piece with ivory flowers and gold leaves"><img src="assets/img/ph/t/hair-accessories.jpg" alt="" loading="lazy"></button><button type="button" class="" data-src="assets/img/ph/hair-comb.jpg" data-alt="Gold bridal hair comb with pearls and ivory flowers" aria-label="Show: Gold bridal hair comb with pearls and ivory flowers"><img src="assets/img/ph/t/hair-comb.jpg" alt="" loading="lazy"></button><button type="button" class="" data-src="assets/img/ph/hair-vine.jpg" data-alt="Gold pearl hair vine on marble" aria-label="Show: Gold pearl hair vine on marble"><img src="assets/img/ph/t/hair-vine.jpg" alt="" loading="lazy"></button><button type="button" class="" data-src="assets/img/ph/hair-pins-floral.jpg" data-alt="Floral bridal hair pins with crystal and pearl" aria-label="Show: Floral bridal hair pins with crystal and pearl"><img src="assets/img/ph/t/hair-pins-floral.jpg" alt="" loading="lazy"></button><button type="button" class="" data-src="assets/img/ph/hair-gift-box.jpg" data-alt="Bridal hair pieces in a black gift box" aria-label="Show: Bridal hair pieces in a black gift box"><img src="assets/img/ph/t/hair-gift-box.jpg" alt="" loading="lazy"></button></div></div>
+          <div>
+            <div class="num">02 · TO WEAR</div>
+            <h3>Bridal hair pieces</h3>
+            <p class="lead muted">Combs, vines and pins in gold, pearl and crystal, with handmade ivory flowers.</p>
+            <ul><li>Hair combs and pearl vines</li><li>Single pins or sets to scatter through an updo</li><li>Gift-boxed in black and gold</li></ul>
+            <span class="tag">Coming soon</span>
+          </div>
+        </article>
+        <article class="prod" id="flutes">
+          <div class="gal"><div class="main"><img src="assets/img/ph/flutes-black-gold.jpg" alt="Champagne flutes hand-painted with black, white and gold flowers" loading="lazy"></div><div class="thumbs"><button type="button" class="on" data-src="assets/img/ph/flutes-black-gold.jpg" data-alt="Champagne flutes hand-painted with black, white and gold flowers" aria-label="Show: Champagne flutes hand-painted with black, white and gold flowers"><img src="assets/img/ph/t/flutes-black-gold.jpg" alt="" loading="lazy"></button><button type="button" class="" data-src="assets/img/ph/flutes-wedding.jpg" data-alt="Hand-painted wedding champagne glasses beside ivory roses" aria-label="Show: Hand-painted wedding champagne glasses beside ivory roses"><img src="assets/img/ph/t/flutes-wedding.jpg" alt="" loading="lazy"></button><button type="button" class="" data-src="assets/img/ph/flutes-floral.jpg" data-alt="Champagne flutes painted with black and gold leaves" aria-label="Show: Champagne flutes painted with black and gold leaves"><img src="assets/img/ph/t/flutes-floral.jpg" alt="" loading="lazy"></button><button type="button" class="" data-src="assets/img/ph/glassware-white-gold.jpg" data-alt="Glassware painted with white flowers and gold leaves" aria-label="Show: Glassware painted with white flowers and gold leaves"><img src="assets/img/ph/t/glassware-white-gold.jpg" alt="" loading="lazy"></button></div></div>
+          <div>
+            <div class="num">03 · TO TOAST</div>
+            <h3>Hand-painted champagne flutes</h3>
+            <p class="lead muted">A pair of flutes painted by hand in gold, black and white for your first toast.</p>
+            <ul><li>Black and gold or white and gold florals</li><li>Add your names or wedding date</li><li>Painted to order as a matching pair</li></ul>
+            <span class="tag">Coming soon</span>
+          </div>
+        </article>
+        <article class="prod flip" id="glass">
+          <div class="gal"><div class="main"><img src="assets/img/ph/framed-glass.jpg" alt="Gold frame holding glass painted with white, gold and black flowers" loading="lazy"></div><div class="thumbs"><button type="button" class="on" data-src="assets/img/ph/framed-glass.jpg" data-alt="Gold frame holding glass painted with white, gold and black flowers" aria-label="Show: Gold frame holding glass painted with white, gold and black flowers"><img src="assets/img/ph/t/framed-glass.jpg" alt="" loading="lazy"></button><button type="button" class="" data-src="assets/img/ph/botanical-glass.jpg" data-alt="Gold frame holding glass painted with delicate gold botanicals" aria-label="Show: Gold frame holding glass painted with delicate gold botanicals"><img src="assets/img/ph/t/botanical-glass.jpg" alt="" loading="lazy"></button><button type="button" class="" data-src="assets/img/ph/arched-glass.jpg" data-alt="Gold arched frame with a large painted white and gold flower" aria-label="Show: Gold arched frame with a large painted white and gold flower"><img src="assets/img/ph/t/arched-glass.jpg" alt="" loading="lazy"></button></div></div>
+          <div>
+            <div class="num">04 · TO KEEP</div>
+            <h3>Framed keepsake glass</h3>
+            <p class="lead muted">Glass hand-painted with florals in gold, black and white, framed to hang or stand at home.</p>
+            <ul><li>Your names, wedding date and city</li><li>Classic gold frame or gold arch</li><li>A keepsake for your home or a gift for the couple</li></ul>
+            <span class="tag">Coming soon</span>
+          </div>
+        </article>
+      </div>
+      <p class="note" style="margin-top:10px">Coming soon. Pictures shown are design ideas.</p>
+    </div>
+  </section>
+
+  <section class="section beige">
+    <div class="wrap feature">
+      <div class="ph-frame"><img src="assets/img/ph/bridal-gift-box.jpg" alt="Black Hatille gift box with gold monogram, black ribbon and ivory tissue" loading="lazy"></div>
+      <div>
+        <div class="num">PERSONALISED</div>
+        <h2 style="margin:16px 0 0">Your names. Your date. <em class="gold-d">Made by hand.</em></h2>
+        <ol class="steps">
+          <li><span>01</span><div>Choose your piece or a matching set.</div></li>
+          <li><span>02</span><div>Send your names, wedding date, colours and city.</div></li>
+          <li><span>03</span><div>Approve your design proof before I begin.</div></li>
+          <li><span>04</span><div>Receive it gift-ready in Hatille black and gold packaging.</div></li>
+        </ol>
+        <a class="btn" href="/contact" style="margin-top:30px">Ask about a custom order</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid g3">
+      <div><div class="num">01</div><h3 style="margin:14px 0 10px">Early access</h3><p class="muted">Waitlist members order before anyone else and get a launch gift.</p></div>
+      <div><div class="num">02</div><h3 style="margin:14px 0 10px">Bridal styling</h3><p class="muted">Veils matched to your gown's neckline, fabric and colour season.</p></div>
+      <div><div class="num">03</div><h3 style="margin:14px 0 10px">Gift-ready</h3><p class="muted">Every piece arrives in Hatille black and gold packaging.</p></div>
+    </div>
+  </section>
+</main>
+<script src="assets/site.js"></script>
+<script>
+  document.querySelectorAll('.gal').forEach(g => {
+    const main = g.querySelector('.main img');
+    g.querySelectorAll('.thumbs button').forEach(b => b.addEventListener('click', () => {
+      main.src = b.dataset.src; main.alt = b.dataset.alt;
+      g.querySelectorAll('.thumbs button').forEach(x => x.classList.toggle('on', x === b));
+    }));
+  });
+</script>
+<script>document.querySelectorAll("[data-buy]").forEach(b=>b.addEventListener("click",()=>HatilleShop.buy(b.dataset.buy)));</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+HATILLE WEBSITE: HOW TO LAUNCH IT FOR FREE
+==========================================
+
+The quickest free option is Netlify. It hosts the site and also collects
+your contact form and waitlist sign-ups for you.
+
+1. Go to https://app.netlify.com/drop and create a free account.
+2. Unzip this folder, then drag the whole "hatille-website" folder onto the page.
+3. Your site goes live within a few seconds at an address like hatille.netlify.app.
+   You can rename it under Site configuration → Change site name.
+4. Forms: in Netlify, open your site → Forms → Enable form detection, then
+   drag the folder onto the Deploys page once more so Netlify finds the two
+   forms ("contact" and "waitlist"). Then add an email notification to
+   info.hatille@gmail.com under Forms → Form notifications.
+5. Optional: buy a domain (for example hatille.com, about $15–25 CAD a year) and
+   connect it under Domain management.
+
+BEFORE YOU LAUNCH, UPDATE:
+- Social links are all set: Instagram, Facebook, LinkedIn and YouTube (@Hatille).
+- The shop and alteration lists: open assets/data.js to add, remove or reorder
+  shops. Style & Grace Cleaners is pinned at the top with "pinned: true".
+- Confirm each listed shop's details and hours before promoting them.
+
+WHAT WORKS ONCE IT'S LIVE
+- Contact form and waitlist (through Netlify Forms)
+- Printing the bodice block (opens your browser's print dialog)
+- Everything else works now: colour draping, try-on, alteration finder,
+  water tracker, blog. Photos people upload stay on their own device.

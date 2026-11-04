@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact · Hatille</title>
+<meta name="description" content="Contact Hatille: info.hatille@gmail.com">
+<link rel="icon" href="assets/img/hatille-icon-black.svg">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<meta name="theme-color" content="#0c0b0a">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hatille">
+<meta property="og:title" content="Contact · Hatille">
+<meta property="og:description" content="Contact Hatille: info.hatille@gmail.com">
+<meta property="og:url" content="https://hatille.com/contact">
+<link rel="canonical" href="https://hatille.com/contact">
+<meta property="og:image" content="https://hatille.com/assets/img/og-hatille.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital@1&family=Poppins:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .contact{display:grid;grid-template-columns:.9fr 1.1fr;gap:80px}
+  @media (max-width:900px){.contact{grid-template-columns:1fr;gap:50px}}
+  .info div{padding:24px 0;border-bottom:1px solid var(--line)}
+</style>
+</head>
+<body>
+<main>
+  <section class="page-hero dark photo" style="--img:url(/assets/img/ph/stationery.jpg)">
+    <div class="wrap">
+      <div class="eyebrow">Contact</div>
+      <h1 style="margin-top:22px">Let's <em class="gold-l">talk</em>.</h1>
+      <p class="lead muted">Questions, collaborations, press or bridal enquiries: I'd love to hear from you.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap contact">
+      <div class="info">
+        <div><div class="eyebrow">Email</div><p style="font-size:22px;margin:10px 0 0"><a href="mailto:info.hatille@gmail.com" style="text-decoration:none">info.hatille@gmail.com</a></p></div>
+        <div><div class="eyebrow">Based in</div><p style="font-size:18px;margin:10px 0 0">Ontario, Canada</p></div>
+        <div><div class="eyebrow">Follow</div><div class="chips" id="soc" style="margin-top:14px"></div></div>
+        <div style="border:0"><div class="eyebrow">Response time</div><p class="muted" style="margin:10px 0 0">I reply to every message within 2 business days.</p></div>
+      </div>
+      <form class="panel corner" name="contact" method="POST" action="/contact?sent=1" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="contact"><input type="hidden" name="bot-field">
+        <div class="grid g2" style="gap:16px">
+          <div class="field"><label for="n">Name</label><input id="n" name="name" required></div>
+          <div class="field"><label for="e">Email</label><input id="e" type="email" name="email" required></div>
+        </div>
+        <div class="field"><label for="t">Topic</label><select id="t" name="topic"><option>General question</option><option>Handmade bridal / custom order</option><option>Colour analysis</option><option>Alterations</option><option>Collaboration or press</option></select></div>
+        <div class="field"><label for="m">Message</label><textarea id="m" name="message" required></textarea></div>
+        <button class="btn">Send message</button>
+        <div class="form-out"></div>
+      </form>
+    </div>
+  </section>
+</main>
+<script src="assets/site.js"></script>
+<script>
+  document.getElementById('soc').innerHTML = Object.entries(HATILLE.socials).map(([t, h]) => `<a class="chip" style="text-decoration:none" href="${h}" target="_blank" rel="noopener">${t}</a>`).join('');
+</script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wellness · Hatille</title>
+<meta name="description" content="Mental wellness through style: mood-lifting colour and fashion, simple movement, water intake and dressing for success.">
+<link rel="icon" href="assets/img/hatille-icon-black.svg">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<meta name="theme-color" content="#0c0b0a">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hatille">
+<meta property="og:title" content="Wellness · Hatille">
+<meta property="og:description" content="Mental wellness through style: mood-lifting colour and fashion, simple movement, water intake and dressing for success.">
+<meta property="og:url" content="https://hatille.com/wellness">
+<link rel="canonical" href="https://hatille.com/wellness">
+<meta property="og:image" content="https://hatille.com/assets/img/og-hatille.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital@1&family=Poppins:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .pillars{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line)}
+  .pillars > div{padding:38px 28px;border-right:1px solid var(--line)}
+  .pillars > div:last-child{border-right:0}
+  @media (max-width:1000px){.pillars{grid-template-columns:1fr}.pillars > div{border-right:0;border-bottom:1px solid var(--line)}}
+  .mood{display:grid;grid-template-columns:.8fr 1.2fr;gap:50px;align-items:start}
+  @media (max-width:900px){.mood{grid-template-columns:1fr}}
+  .moodcard{border:1px solid var(--line-dark);background:var(--charcoal);padding:44px;min-height:380px}
+  .moodcols{display:flex;gap:0;height:120px;margin:22px 0 26px}.moodcols i{flex:1}
+  .glasses{display:flex;flex-wrap:wrap;gap:12px;margin:26px 0}
+  .glass{width:44px;height:60px;border:1.5px solid var(--gold);border-top:0;border-radius:0 0 8px 8px;cursor:pointer;background:transparent;position:relative;overflow:hidden}
+  .glass::after{content:"";position:absolute;left:0;right:0;bottom:0;height:0;background:linear-gradient(#d4b47e,#b08d57);transition:height .3s}
+  .glass.on::after{height:85%}
+  .tips{list-style:none;padding:0;margin:0}
+  .tips li{padding:18px 0;border-bottom:1px solid var(--line);display:flex;gap:22px}
+  .tips li span{font:500 12px var(--sans);letter-spacing:.18em;color:var(--gold);padding-top:4px;min-width:26px}
+  .help{border:1px solid var(--gold);padding:28px 32px;display:flex;gap:30px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--white)}
+  /* interactive rituals */
+  .pillars > button{all:unset;box-sizing:border-box;padding:38px 28px;border-right:1px solid var(--line);cursor:pointer;position:relative;transition:background .25s}
+  .pillars > button:last-child{border-right:0}
+  .pillars > button:hover{background:#fbf7f0}
+  .pillars > button:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+  .pillars > button .tick{position:absolute;top:30px;right:24px;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:14px;color:transparent;transition:all .25s}
+  .pillars > button.done{background:#f6efe2}
+  .pillars > button.done .tick{background:var(--gold);color:#0c0b0a}
+  .pillars > button .tap{display:block;margin-top:16px;font:500 11px var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--gold-deep)}
+  @media (max-width:1000px){.pillars > button{border-right:0;border-bottom:1px solid var(--line)}}
+  .rprog{display:flex;align-items:center;gap:18px;margin-top:26px;flex-wrap:wrap}
+  .rbar{flex:1;min-width:200px;height:6px;background:#ece4d6;position:relative;overflow:hidden}
+  .rbar i{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(90deg,#d4b47e,#b08d57);transition:width .4s}
+  /* feel-good corner */
+  .corner2{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  @media (max-width:900px){.corner2{grid-template-columns:1fr}}
+  .fg{border:1px solid var(--line);background:var(--white);padding:40px;display:flex;flex-direction:column;align-items:center;text-align:center;min-height:470px}
+  .breath{width:220px;height:220px;margin:30px auto 26px;position:relative;display:flex;align-items:center;justify-content:center}
+  .breath .ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(176,141,87,.35)}
+  .breath .ball{width:90px;height:90px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f6e7c8,#c9a96e 60%,#9c7a45);box-shadow:0 10px 40px rgba(176,141,87,.35);transition:transform 4s ease-in-out}
+  .breath .cue{position:absolute;font:500 13px var(--sans);letter-spacing:.24em;text-transform:uppercase;color:#0c0b0a}
+  .deck{perspective:1200px;width:min(320px,100%);height:250px;margin:26px auto;cursor:pointer}
+  .deck .card{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+  .deck.flip .card{transform:rotateY(180deg)}
+  .deck .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;border:1px solid var(--gold)}
+  .deck .front{background:#0c0b0a url(assets/img/hatille-print-black-gold.svg) center/120px repeat;color:#fff}
+  .deck .front span{background:#0c0b0a;padding:10px 16px;font:500 12px var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--gold-light)}
+  .deck .back{background:linear-gradient(135deg,#fffdf8,#f3e9d8);transform:rotateY(180deg)}
+  .deck .back p{font:italic 22px/1.45 'Lora',serif;margin:0;color:#2a251f}
+  .deck .back small{margin-top:16px;font:500 11px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep)}
+  /* swatch match game */
+  .game{display:grid;grid-template-columns:.75fr 1.25fr;gap:50px;align-items:start}
+  @media (max-width:1000px){.game{grid-template-columns:1fr}}
+  .gstats{display:flex;gap:28px;margin:26px 0}
+  .gstats div{font:500 11px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:#a39d94}
+  .gstats b{display:block;font:300 34px var(--sans);letter-spacing:0;color:#fff;margin-top:6px}
+  .board{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;position:relative}
+  .board.easy{grid-template-columns:repeat(4,1fr)}
+  .sw-card{aspect-ratio:3/4;perspective:900px;cursor:pointer;border:0;padding:0;background:none}
+  .sw-card{display:block;width:100%}
+  .sw-card .in{display:block;position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+  .sw-card.up .in,.sw-card.got .in{transform:rotateY(180deg)}
+  .sw-card .f,.sw-card .b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:1px solid rgba(176,141,87,.45)}
+  .sw-card .f{background:#141210;display:flex;align-items:center;justify-content:center}
+  .sw-card .f .mono{font:200 clamp(30px,4vw,54px) var(--sans);color:var(--gold);letter-spacing:0}
+  .sw-card .f{background:radial-gradient(circle at 50% 40%,#1d1a16,#0f0d0b)}
+  .sw-card .b{transform:rotateY(180deg);display:flex;align-items:flex-end}
+  .sw-card .b span{display:block;width:100%;background:rgba(12,11,10,.72);color:#fff;font:500 10px var(--sans);letter-spacing:.18em;text-transform:uppercase;padding:8px 6px;text-align:center}
+  .sw-card.got .b{box-shadow:0 0 0 2px var(--gold),0 10px 30px rgba(176,141,87,.35)}
+  .sw-card:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+  .gtoast{min-height:64px;margin-top:6px;font:italic 21px/1.5 'Lora',serif;color:var(--gold-light);transition:opacity .4s}
+  .win{position:absolute;inset:0;background:rgba(12,11,10,.92);display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;z-index:3;border:1px solid var(--gold)}
+  .win.on{display:flex}
+  .win h3{font-size:clamp(28px,3vw,40px);color:#fff;margin:14px 0 10px}
+  #confetti{position:fixed;inset:0;pointer-events:none;z-index:999}
+  @media (prefers-reduced-motion:reduce){.sw-card .in,.deck .card,.breath .ball{transition:none}}
+</style>
+</head>
+<body>
+<main>
+  <section class="page-hero dark photo" style="--img:url(/assets/img/ph/stone-arch.jpg)">
+    <div class="wrap">
+      <div class="eyebrow">Wellness</div>
+      <h1 style="margin-top:22px">Feel good first. <em class="gold-l">Then get dressed.</em></h1>
+      <p class="lead muted">Mental wellness is at the heart of Hatille. Here are small, real ways to lift your mood through colour and style, and the everyday basics that help you feel your best: movement, water, and dressing for the day you want.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="num" style="margin-bottom:16px">01 · MENTAL WELLNESS</div>
+      <div class="grid g2" style="align-items:end;margin-bottom:50px">
+        <h2>Five daily rituals for a <em class="gold-d">lighter mind</em>.</h2>
+        <p class="muted">None of these take more than ten minutes. Tap each one you do today and watch your glow build. Your progress stays on your device.</p>
+      </div>
+      <div class="pillars" id="rituals">
+        <button type="button" data-r="0" aria-pressed="false"><span class="tick" aria-hidden="true">✓</span><div class="num">01</div><h3 style="margin:14px 0 10px">Morning light</h3><p class="muted">Step outside or sit by a window within an hour of waking. Natural light helps set your body clock and lift your energy.</p><span class="tap">Tap when done</span></button>
+        <button type="button" data-r="1" aria-pressed="false"><span class="tick" aria-hidden="true">✓</span><div class="num">02</div><h3 style="margin:14px 0 10px">Slow breath</h3><p class="muted">Breathe in for 4, hold for 4, out for 6. A few rounds calm a racing mind before a big moment.</p><span class="tap">Tap when done</span></button>
+        <button type="button" data-r="2" aria-pressed="false"><span class="tick" aria-hidden="true">✓</span><div class="num">03</div><h3 style="margin:14px 0 10px">Three good things</h3><p class="muted">Each night, write down three things that went well. It trains your attention toward what's working.</p><span class="tap">Tap when done</span></button>
+        <button type="button" data-r="3" aria-pressed="false"><span class="tick" aria-hidden="true">✓</span><div class="num">04</div><h3 style="margin:14px 0 10px">Screen boundaries</h3><p class="muted">No phone for the first and last 30 minutes of your day. Protect your mornings and your sleep.</p><span class="tap">Tap when done</span></button>
+        <button type="button" data-r="4" aria-pressed="false"><span class="tick" aria-hidden="true">✓</span><div class="num">05</div><h3 style="margin:14px 0 10px">Real connection</h3><p class="muted">Call or meet one person you love each week. Connection is one of the strongest supports for wellbeing.</p><span class="tap">Tap when done</span></button>
+      </div>
+      <div class="rprog"><span class="eyebrow" id="rtext">0 of 5 today</span><div class="rbar"><i id="rbar"></i></div><span class="note" id="rstreak"></span></div>
+      <div class="help" style="margin-top:50px">
+        <div><div class="eyebrow">You're not alone</div><p style="margin:10px 0 0;max-width:680px">If you're struggling or thinking about suicide, help is available 24/7 in Canada. Call or text <strong>9-8-8</strong> to reach the Suicide Crisis Helpline. In an emergency, call 911.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section beige" id="corner">
+    <div class="wrap">
+      <div class="num" style="margin-bottom:16px">02 · YOUR FEEL-GOOD CORNER</div>
+      <div class="grid g2" style="align-items:end;margin-bottom:46px">
+        <h2>Take a minute, <em class="gold-d">just for you</em>.</h2>
+        <p class="muted">Breathe along with the golden circle, then pull a card for a kind word to carry into your day.</p>
+      </div>
+      <div class="corner2">
+        <div class="fg">
+          <div class="eyebrow">Breathe with me</div>
+          <div class="breath" aria-hidden="true"><span class="ring"></span><span class="ring" style="inset:22px"></span><div class="ball" id="ball"></div><span class="cue" id="cue">Ready</span></div>
+          <p class="muted" id="bmsg" aria-live="polite" style="min-height:26px">In for 4 · hold for 4 · out for 6</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:10px"><button class="btn" id="bstart">Start · 1 minute</button><button class="btn ghost hidden" id="bstop">Stop</button></div>
+        </div>
+        <div class="fg">
+          <div class="eyebrow">Pull a kindness card</div>
+          <div class="deck" id="deck" role="button" tabindex="0" aria-label="Pull a kindness card"><div class="card"><div class="face front"><span>Tap to draw</span></div><div class="face back"><p id="aff"></p><small>Hatille · kind words</small></div></div></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="btn ghost" id="draw">Draw another</button><button class="btn ghost" id="shareAff">Save as image</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark">
+    <div class="wrap">
+      <div class="num" style="margin-bottom:16px">03 · DRESS YOUR MOOD</div>
+      <div class="mood">
+        <div>
+          <h2>How are you <em class="gold-l">feeling</em> today?</h2>
+          <p class="muted" style="margin-top:22px">Colour and clothing can't fix a hard day, but they can shift how you carry it. Choose your mood for colours, an outfit idea and a small ritual.</p>
+          <div class="chips" id="moods" style="margin-top:30px"></div>
+        </div>
+        <div class="moodcard corner" id="moodOut"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark" id="play">
+    <div class="wrap">
+      <div class="num" style="margin-bottom:16px">04 · PLAY · SWATCH MATCH</div>
+      <div class="game">
+        <div>
+          <h2>A little game to <em class="gold-l">clear your mind</em>.</h2>
+          <p class="muted" style="margin-top:20px">Flip the fabric swatches and find the pairs. Every match reveals a kind word. There's no timer pressure and no way to lose, so take it slowly.</p>
+          <div class="seg" id="level" style="margin-top:26px"><button class="on" data-n="6">Gentle · 12 cards</button><button data-n="8">Classic · 16 cards</button></div>
+          <div class="gstats"><div>Moves<b id="gm">0</b></div><div>Pairs<b id="gp">0/6</b></div><div>Best<b id="gb">–</b></div></div>
+          <div class="gtoast" id="toast" aria-live="polite">Tap any swatch to begin.</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px"><button class="btn ghost" id="restart" style="color:#fff;border-color:rgba(255,255,255,.6)">New game</button><button class="btn ghost" id="sound" style="color:#fff;border-color:rgba(255,255,255,.6)" aria-pressed="true">Sound: on</button></div>
+        </div>
+        <div class="board" id="board"><div class="win" id="win"><div class="eyebrow">All matched</div><h3 id="wtitle">Beautifully done.</h3><p class="muted" id="wtext" style="max-width:420px"></p><div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:20px"><button class="btn" id="again" style="background:var(--gold);border-color:var(--gold);color:#0c0b0a">Play again</button><a class="btn ghost" href="/colour-analysis" style="color:#fff;border-color:rgba(255,255,255,.6)">Find your colours</a></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section beige">
+    <div class="wrap">
+      <div class="num" style="margin-bottom:16px">05 · FASHION THAT LIGHTENS THE DAY</div>
+      <div class="grid g2" style="gap:70px">
+        <div>
+          <h2>Small style choices, <em class="gold-d">big mood</em>.</h2>
+          <p class="muted" style="margin-top:24px">These little choices tell yourself that you matter, even on days you're not going anywhere.</p>
+        </div>
+        <ul class="tips">
+          <li><span>01</span><div><h4>Get dressed, even at home</h4><p class="muted" style="margin:6px 0 0">Swap pyjamas for something soft but intentional. It signals "the day has started".</p></div></li>
+          <li><span>02</span><div><h4>Wear the special piece on a Tuesday</h4><p class="muted" style="margin:6px 0 0">Stop saving your favourite things for occasions. Joy is the occasion.</p></div></li>
+          <li><span>03</span><div><h4>One joyful accessory</h4><p class="muted" style="margin:6px 0 0">A bright scarf, gold earrings or a coloured bag lifts a neutral outfit and your energy.</p></div></li>
+          <li><span>04</span><div><h4>Comfort you can feel</h4><p class="muted" style="margin:6px 0 0">Cashmere, silk and brushed cotton feel calming against the skin. Choose texture on anxious days.</p></div></li>
+          <li><span>05</span><div><h4>Plan tomorrow tonight</h4><p class="muted" style="margin:6px 0 0">Laying out your outfit removes one decision from a stressful morning.</p></div></li>
+          <li><span>06</span><div><h4>Edit what drains you</h4><p class="muted" style="margin:6px 0 0">If something pinches, itches or makes you feel smaller, alter it, donate it or let it go.</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section white">
+    <div class="wrap grid g2" style="gap:80px">
+      <div>
+        <div class="num" style="margin-bottom:16px">06 · MOVE YOUR BODY</div>
+        <h2>Exercise you'll <em class="gold-d">actually</em> do.</h2>
+        <p class="muted" style="margin-top:22px">Canada's movement guidelines for adults suggest at least <strong>150 minutes a week</strong> of moderate-to-vigorous activity, muscle strengthening at least <strong>twice a week</strong>, and breaking up long periods of sitting.</p>
+        <ul class="tips" style="margin-top:20px">
+          <li><span>01</span><div>Walk for 20–30 minutes a day. Brisk walking counts, and it's one of the best mood boosters there is.</div></li>
+          <li><span>02</span><div>Strength twice a week: squats, push-ups, lunges or a class. Strong feels good.</div></li>
+          <li><span>03</span><div>Stand up and stretch every hour you sit.</div></li>
+          <li><span>04</span><div>Dress the part. Activewear you love makes it easier to show up.</div></li>
+        </ul>
+      </div>
+      <div>
+        <div class="num" style="margin-bottom:16px">07 · DRINK YOUR WATER</div>
+        <h2>Hydration, <em class="gold-d">beautifully</em>.</h2>
+        <p class="muted" style="margin-top:22px">A common guideline is about <strong>9 cups (2.2 L)</strong> of fluids a day for women and <strong>12 cups (3 L)</strong> for men, more when it's hot or you're active. Water is the best choice. Tap a glass each time you drink.</p>
+        <div class="seg" id="who" style="margin-top:20px"><button class="on" data-n="9">Women · 9 cups</button><button data-n="12">Men · 12 cups</button></div>
+        <div class="glasses" id="glasses"></div>
+        <p id="wmsg" class="eyebrow"></p>
+        <p class="note">Your count is saved in this browser only and resets each day. Speak with your doctor about your own needs.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="split dark">
+    <img src="assets/img/ph/gift-box.jpg" alt="Black Hatille gift box with a gold monogram, gold scissors and dried flowers" style="object-position:60% center">
+    <div class="txt gridlines">
+      <div class="num" style="margin-bottom:16px">08 · DRESSING FOR SUCCESS</div>
+      <h2>Dress for the day you <em class="gold-l">want</em>.</h2>
+      <ul class="tips" style="margin-top:26px">
+        <li style="border-color:var(--line-dark)"><span>01</span><div><strong>Fit beats price.</strong> A tailored $80 blazer looks more expensive than an ill-fitting $800 one.</div></li>
+        <li style="border-color:var(--line-dark)"><span>02</span><div><strong>Wear your colours near your face</strong> to look rested and confident on camera and in person.</div></li>
+        <li style="border-color:var(--line-dark)"><span>03</span><div><strong>Build a capsule</strong> of 10–15 pieces that mix together, so every morning is easy.</div></li>
+        <li style="border-color:var(--line-dark)"><span>04</span><div><strong>Mind the details:</strong> pressed fabric, clean shoes, minimal well-chosen jewellery.</div></li>
+        <li style="border-color:var(--line-dark)"><span>05</span><div><strong>Dress one step above</strong> the room for interviews and big meetings.</div></li>
+      </ul>
+      <div style="margin-top:34px;display:flex;gap:14px;flex-wrap:wrap"><a class="btn" href="/colour-analysis">Find my colours</a><a class="btn ghost" href="/alterations">Get the perfect fit</a></div>
+    </div>
+  </section>
+</main>
+<script src="assets/site.js"></script>
+<script>
+const MOODS = {
+  'Low energy': { cols: ['#ffd400', '#ff9f43', '#f7efe2'], outfit: 'A butter-yellow knit or a warm orange scarf with your favourite jeans and clean white sneakers.', ritual: 'Open the curtains, play one song you love, and step outside for five minutes of daylight.' },
+  'Anxious': { cols: ['#a8c5e0', '#8fae8b', '#f4f1ec'], outfit: 'Soft blue or sage in a breathable natural fabric, with a loose fit and nothing that pinches.', ritual: 'Breathe in for 4 and out for 6, five times. Touch a soft texture and name five things you can see.' },
+  'Stressed': { cols: ['#8fae8b', '#e2d7c6', '#ffffff'], outfit: 'Calm neutrals with one green note: a sage shirt, beige trousers and comfortable flats.', ritual: 'Write down everything on your mind, then circle just one thing to do next.' },
+  'Unmotivated': { cols: ['#c8102e', '#0c0b0a', '#b08d57'], outfit: 'A red lip or red top with sharp black tailoring and a gold accessory. Dress like you mean business.', ritual: 'Set a 10-minute timer and start the smallest step. Momentum follows action.' },
+  'Lonely': { cols: ['#e8a0a8', '#f2c9a0', '#fff4ea'], outfit: 'Warm, soft rose or peach in a cozy knit. Something that feels like a hug.', ritual: 'Send a voice note to someone you love, or book a coffee with a friend this week.' },
+  'Confident': { cols: ['#0c0b0a', '#b08d57', '#ffffff'], outfit: 'Black, white and gold: a crisp shirt, tailored trousers and statement gold earrings.', ritual: 'Use the energy. Take on the hard task or the big conversation today.' },
+};
+const moods = document.getElementById('moods'), out = document.getElementById('moodOut');
+moods.innerHTML = Object.keys(MOODS).map(m => `<button class="chip">${m}</button>`).join('');
+function showMood(m) {
+  const d = MOODS[m];
+  [...moods.children].forEach(c => c.classList.toggle('on', c.textContent === m));
+  out.innerHTML = `<div class="eyebrow">Feeling ${m.toLowerCase()}</div><div class="moodcols">${d.cols.map(c => `<i style="background:${c}"></i>`).join('')}</div>
+    <div class="eyebrow" style="margin-bottom:8px">Wear</div><p style="font-size:18px">${d.outfit}</p>
+    <div class="eyebrow" style="margin:22px 0 8px">Try this</div><p class="it" style="font-size:21px;color:var(--gold-light)">${d.ritual}</p>`;
+}
+moods.onclick = e => { if (e.target.matches('.chip')) showMood(e.target.textContent); };
+showMood('Low energy');
+
+const today = new Date().toDateString();
+let target = 9, count = 0;
+try { const s = JSON.parse(localStorage.getItem('hatille-water') || '{}'); if (s.d === today) { count = s.c; target = s.t || 9; } } catch (e) {}
+function save() { try { localStorage.setItem('hatille-water', JSON.stringify({ d: today, c: count, t: target })); } catch (e) {} }
+function glasses() {
+  const g = document.getElementById('glasses');
+  g.innerHTML = Array.from({ length: target }, (_, i) => `<button class="glass ${i < count ? 'on' : ''}" aria-label="Glass ${i + 1}" data-i="${i}"></button>`).join('');
+  document.getElementById('wmsg').textContent = count >= target ? 'Beautiful. Goal reached today.' : `${count} of ${target} cups`;
+  document.querySelectorAll('#who button').forEach(b => b.classList.toggle('on', +b.dataset.n === target));
+}
+document.getElementById('glasses').onclick = e => { const b = e.target.closest('.glass'); if (!b) return; const i = +b.dataset.i; count = i < count ? i : i + 1; save(); glasses(); };
+document.querySelectorAll('#who button').forEach(b => b.onclick = () => { target = +b.dataset.n; count = Math.min(count, target); save(); glasses(); });
+glasses();
+</script>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<script src="assets/wellplay.js"></script>
+</body>
+</html>

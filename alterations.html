@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alterations · Hatille</title>
+<meta name="description" content="Tell us what you need altered. Get what to say to your tailor, how it's done, average cost, and the best alteration shops in Ontario. Plus printable pattern blocks for tops, dresses, skirts, pants and jackets.">
+<link rel="icon" href="assets/img/hatille-icon-black.svg">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<meta name="theme-color" content="#0c0b0a">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hatille">
+<meta property="og:title" content="Alterations · Hatille">
+<meta property="og:description" content="Tell us what you need altered. Get what to say to your tailor, how it's done, average cost, and the best alteration shops in Ontario. Plus printable pattern blocks for tops, dresses, skirts, pants and jackets.">
+<meta property="og:url" content="https://hatille.com/alterations">
+<link rel="canonical" href="https://hatille.com/alterations">
+<meta property="og:image" content="https://hatille.com/assets/img/og-hatille.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital@1&family=Poppins:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .finder{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:end}
+  @media (max-width:900px){.finder{grid-template-columns:1fr}}
+  .answer{display:grid;grid-template-columns:1.3fr 1fr;gap:0;border:1px solid var(--line);background:var(--white)}
+  .answer > div{padding:44px}
+  .answer .side{background:var(--black);color:#fff}
+  .answer .side .btn{background:var(--gold);border-color:var(--gold);color:var(--black)}
+  .answer .side .btn:hover{background:#fff;border-color:#fff}
+  @media (max-width:900px){.answer{grid-template-columns:1fr}.answer > div{padding:30px 24px}}
+  .say{font-family:var(--serif);font-style:italic;font-size:22px;line-height:1.5;border-left:2px solid var(--gold);padding:4px 0 4px 22px;margin:18px 0 30px}
+  .kv{display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--line-dark);font-size:15px}
+  .kv b{font-weight:400;color:var(--gold-light)}
+  .tips li{margin-bottom:8px}
+  .shops{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  @media (max-width:900px){.shops{grid-template-columns:1fr}}
+  .shop{border:1px solid var(--line);background:var(--white);padding:28px 30px;position:relative}
+  .shop.top{border-color:var(--gold);background:linear-gradient(135deg,#fffdf8,#f6efe2)}
+  .shop .rank{position:absolute;top:24px;right:26px;font:500 13px var(--sans);letter-spacing:.14em;color:var(--gold)}
+  .shop h4{font-size:20px;font-weight:400;margin:6px 0 4px;padding-right:50px}
+  .shop .area{font-size:13px;color:var(--muted);margin-bottom:12px}
+  .shop .cred{font-size:12px;font-weight:500;letter-spacing:.06em;color:var(--gold-deep);margin:12px 0 16px}
+  .also{font-size:12px;color:var(--muted);margin-top:4px}
+  /* finder v2 */
+  .cats{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap}
+  .cats button{background:transparent;border:1px solid var(--line);padding:12px 18px;font:500 12px var(--sans);letter-spacing:.16em;text-transform:uppercase;cursor:pointer;color:var(--black)}
+  .cats button.on{background:var(--black);color:#fff;border-color:var(--black)}
+  .cats button[data-c="bridal"].on{background:var(--gold);border-color:var(--gold);color:var(--black)}
+  .qwrap{position:relative}
+  .sugg{position:absolute;left:0;right:0;top:100%;z-index:20;background:#fff;border:1px solid var(--line);border-top:0;box-shadow:0 18px 40px rgba(0,0,0,.08);display:none;max-height:340px;overflow:auto}
+  .sugg.on{display:block}
+  .sugg button{display:flex;justify-content:space-between;gap:12px;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:13px 16px;font:400 15px var(--sans);cursor:pointer;color:var(--black)}
+  .sugg button:hover,.sugg button.act{background:#f6efe2}
+  .sugg small{color:var(--gold-deep);font-size:12px;white-space:nowrap}
+  .locrow{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}
+  .locbtn{white-space:nowrap}
+  .locstat{font-size:13px;color:var(--gold-deep);margin-top:8px;min-height:20px}
+  #map{height:420px;border:1px solid var(--line);margin-bottom:34px;z-index:1}
+  .pin{width:16px;height:16px;border-radius:50%;background:var(--gold);border:2px solid #0c0b0a;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+  .pin.osm{width:11px;height:11px;background:#fff;border:2px solid #6b645b}
+  .pin.me{width:16px;height:16px;background:#2b6fd6;border:3px solid #fff;box-shadow:0 0 0 6px rgba(43,111,214,.25)}
+  .pin.bridal{background:#f3e7cf;border-color:var(--gold-deep)}
+  .dist{display:inline-block;font-size:12px;font-weight:500;letter-spacing:.08em;color:var(--black);background:#f1ebe0;padding:4px 8px;margin-left:8px}
+  .osmlist{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+  @media (max-width:900px){.osmlist{grid-template-columns:1fr}}
+  .osmlist div{border:1px solid var(--line);padding:16px 18px;background:var(--white);font-size:14px}
+  .osmlist b{display:block;font-weight:500;margin-bottom:4px}
+  .osmlist span{color:var(--muted);font-size:13px}
+  .sub{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep);margin:46px 0 6px;font-weight:500}
+  /* bridal section */
+  .bridal{background:#f6f0e6}
+  .bhead{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center;margin-bottom:60px}
+  @media (max-width:900px){.bhead{grid-template-columns:1fr;gap:30px}}
+  .bhead .ph-frame{aspect-ratio:4/5}
+  .timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--gold);margin:30px 0 0}
+  @media (max-width:900px){.timeline{grid-template-columns:1fr 1fr}}
+  .timeline div{padding:22px 18px 0 0;font-size:14px;line-height:1.65;color:#4b453d}
+  .timeline b{display:block;font:500 12px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:8px}
+  .bcards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media (max-width:900px){.bcards{grid-template-columns:1fr}}
+  .bcard{background:#fffdf8;border:1px solid #e4d6bd;padding:26px;display:flex;flex-direction:column;gap:8px;cursor:pointer;text-align:left;font:inherit;color:inherit}
+  .bcard:hover{border-color:var(--gold)}
+  .bcard h4{font-size:19px;font-weight:400;margin:0}
+  .bcard .c{font-size:13px;color:var(--gold-deep);font-weight:500}
+  .bridal .shop{background:#fffdf8;border-color:#e4d6bd}
+  /* bodice */
+  .bodice{display:grid;grid-template-columns:380px 1fr;gap:40px}
+  @media (max-width:1000px){.bodice{grid-template-columns:1fr}}
+  .bodice .preview{border:1px solid var(--line-dark);background:#fff;padding:20px;min-height:420px;display:flex;align-items:center;justify-content:center}
+  .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+  .wrapseg{display:flex;flex-wrap:wrap}
+  .dl{margin-top:26px;padding-top:22px;border-top:1px solid var(--line-dark)}
+  .printshops{margin-top:80px;padding-top:60px;border-top:1px solid var(--line-dark)}
+  .printshops select{width:100%;background:#0c0b0a;color:#fff;border:1px solid var(--gold);padding:14px 16px;font:inherit}
+  .howto{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin:40px 0}
+  .howto div{color:#d9d2c6;font-size:15px;line-height:1.7}
+  .howto span{display:block;color:var(--gold-light);font-size:12px;letter-spacing:.2em;margin-bottom:8px}
+  .pshops{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .pshop{border:1px solid var(--line-dark);padding:24px;display:flex;flex-direction:column;gap:8px}
+  .pshop h4{font-size:18px;color:#fff}
+  .pshop .tag{align-self:flex-start}
+  .pshop p{color:#cfc8bc;font-size:14px;margin:0;line-height:1.6}
+  .pshop .links{margin-top:auto;padding-top:10px;display:flex;gap:16px;flex-wrap:wrap}
+  @media (max-width:900px){.howto,.pshops{grid-template-columns:1fr}}
+  #printArea{display:none}
+  @media print{
+    body.printing main{display:none!important}
+    body.printing #printArea{display:block!important}
+    .pp{page-break-after:always;break-after:page;font-family:Poppins,Arial,sans-serif;color:#000}
+    .pp.tile{display:flex;align-items:flex-start;justify-content:center}
+    .mt{border-collapse:collapse;font-size:12px}.mt td{border-bottom:1px solid #ddd;padding:4px 18px 4px 0}
+    @page{margin:10mm}
+  }
+</style>
+</head>
+<body>
+<main>
+  <section class="page-hero dark photo" style="--img:url(/assets/img/ph/ivory-gown.jpg)">
+    <div class="wrap">
+      <div class="eyebrow">Alterations</div>
+      <h1 style="margin-top:22px">Welcome. Let's get you the <em class="gold-l">perfect fit</em>.</h1>
+      <p class="lead muted">Whether it's a quick hem or your wedding gown, tell us what you need. We'll give you the exact words to use with your tailor, how the alteration is done, what it usually costs, and the best places in Ontario to go.</p>
+    </div>
+  </section>
+
+  <section class="section tight white">
+    <div class="wrap">
+      <div class="num" style="margin-bottom:16px">01 · WHAT DO YOU NEED ALTERED?</div>
+      <div class="cats" id="cats"><button class="on" data-c="everyday" type="button">Everyday clothes</button><button data-c="bridal" type="button">Wedding &amp; bridal</button></div>
+      <form class="finder" id="finder" onsubmit="return false">
+        <div class="qwrap">
+          <label for="q">Type your alteration</label>
+          <input id="q" placeholder="Start typing: hem, too big, zipper, sleeves…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="sugg">
+          <div class="sugg" id="sugg" role="listbox"></div>
+        </div>
+        <div>
+          <label for="loc">Where are you?</label>
+          <div class="locrow"><input id="loc" placeholder="City or postal code" autocomplete="postal-code"><button class="btn ghost locbtn" id="useLoc" type="button">📍 Use my location</button></div>
+        </div>
+      </form>
+      <div class="locstat" id="locStat" aria-live="polite"></div>
+      <div class="chips" id="quick" style="margin-top:18px"></div>
+      <div style="margin-top:28px"><button class="btn" id="go">Get my recommendation</button></div>
+      <div id="out" class="result"></div>
+    </div>
+  </section>
+
+  <section class="section" id="shopsSec">
+    <div class="wrap">
+      <div class="num" style="margin-bottom:16px">02 · EVERYDAY ALTERATIONS NEAR YOU</div>
+      <div class="grid g2" style="align-items:end;margin-bottom:34px">
+        <h2 id="shopsTitle">Tailors <em class="gold-d">near you</em></h2>
+        <p class="muted" id="shopsSub">Share your location or type your city above. We'll sort our hand-picked tailors by distance and show other tailors around you.</p>
+      </div>
+      <div id="map" role="region" aria-label="Map of alteration shops near you"></div>
+      <div class="sub">Hand-picked by Hatille</div>
+      <p class="note" style="margin:0 0 18px">Chosen for standout reviews, awards and expert lists.</p>
+      <div class="shops" id="shops"></div>
+      <div class="sub">More tailors around you</div>
+      <p class="note" style="margin:0" id="osmNote">From OpenStreetMap. Check reviews before you go.</p>
+      <div class="osmlist" id="osm"></div>
+      <p class="note" style="margin-top:26px">Ratings and hours change, so please confirm details with each shop before you visit.</p>
+    </div>
+  </section>
+
+  <section class="section bridal" id="bridalSec">
+    <div class="wrap">
+      <div class="num" style="margin-bottom:16px">03 · WEDDING GOWNS &amp; BRIDAL</div>
+      <div class="bhead">
+        <div class="ph-frame"><img src="assets/img/ph/cathedral-veil.jpg" alt="A cathedral-length veil displayed in a bridal studio" loading="lazy"></div>
+        <div>
+          <h2>Your wedding gown deserves a <em class="gold-d">specialist</em>.</h2>
+          <p class="muted" style="margin-top:20px">Wedding gowns are not regular dresses. Lace, beading, layers of tulle and a train all need a bridal seamstress, more fittings and more time. Here is how to plan it, what each alteration costs, and the best bridal studios near you.</p>
+          <div class="timeline">
+            <div><b>3–4 months before</b>Book your bridal seamstress. The best studios fill up early in wedding season.</div>
+            <div><b>8–12 weeks before</b>First fitting. Bring your wedding shoes and undergarments.</div>
+            <div><b>3–5 weeks before</b>Second fitting for the bodice, hem and bustle.</div>
+            <div><b>1–2 weeks before</b>Final fitting and a bustle lesson for your maid of honour.</div>
+          </div>
+        </div>
+      </div>
+      <div class="sub" style="margin-top:0">Common bridal alterations</div>
+      <p class="note" style="margin:0 0 18px">Tap one for what to say, how it's done and the average cost.</p>
+      <div class="bcards" id="bcards"></div>
+      <div class="dl-band" style="margin:0 0 10px"><div><div class="eyebrow">The Bride's Alteration &amp; Wedding Planner</div><p class="muted" style="margin:8px 0 0">Fitting tracker, alteration costs, bustle guide, budget and every checklist, in one beautiful fillable PDF.</p></div><a class="btn" href="/shop#downloads" style="background:var(--gold);border-color:var(--gold);color:#0c0b0a">Get the planner · $20</a></div>
+      <div class="sub">Bridal specialists near you</div>
+      <p class="note" style="margin:0 0 18px" id="bshopsSub">Only studios with standout reviews, awards or expert recognition. Nearest first.</p>
+      <div class="shops" id="bshops"></div>
+      <div class="sub">More bridal shops around you</div>
+      <p class="note" style="margin:0">From OpenStreetMap. Many bridal shops also do alterations, so ask when you call.</p>
+      <div class="osmlist" id="bosm"></div>
+    </div>
+  </section>
+
+  <section class="section dark" id="bodice">
+    <div class="wrap">
+      <div class="num" style="margin-bottom:16px">04 · PATTERN BLOCK BUILDER</div>
+      <div class="grid g2" style="align-items:end;margin-bottom:50px">
+        <h2>Your measurements, <em class="gold-l">drafted</em>.</h2>
+        <p class="muted">Build a basic block (sloper) for a top, dress, skirt, pants or jacket, for women or men. Download it full size for a print shop, or as pages for your home printer, and take it to your tailor or dressmaker as the starting point for a perfect fit.</p>
+        <p class="muted" style="margin-top:12px">Drafted with standard block methods and checked for accuracy: matching seams agree within millimetres and every PDF prints at exact 1:1 scale with a 10 cm test square. <b style="color:#fff;font-weight:500">Your first block is free; each additional block is $5.</b> Seam allowances are not included.</p>
+      </div>
+      <div class="bodice">
+        <div>
+          <div class="seg wrapseg" id="btype" style="margin-bottom:14px"></div>
+          <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:28px">
+            <div class="seg" id="kind"><button class="on" data-k="women">Women</button><button data-k="men">Men</button></div>
+            <div class="seg" id="unit"><button class="on" data-u="cm">cm</button><button data-u="in">inches</button></div>
+          </div>
+          <div class="mgrid" id="fields"></div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:10px">
+            <button class="btn" id="draft">Build my block</button>
+          </div>
+          <div class="dl">
+            <div class="eyebrow" style="margin-bottom:12px">Download to print</div>
+            <button class="btn" id="pdfShop" style="background:var(--gold);border-color:var(--gold);color:#0c0b0a">Print shop file (full size PDF)</button>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px">
+              <button class="btn ghost" id="pdfHome" style="color:#fff;border-color:rgba(255,255,255,.6)">Home printer pages (PDF)</button>
+              <div class="seg" id="paper"><button class="on" data-p="letter">Letter</button><button data-p="a4">A4</button></div>
+            </div>
+            <p class="note" id="blockAccess" style="margin-top:12px;color:var(--gold-light)"></p>
+            <p class="note" id="pdfMsg" style="margin-top:8px;min-height:1.4em" aria-live="polite"></p>
+          </div>
+          <p class="note" style="margin-top:14px">How to measure: wear fitted clothing and keep the tape snug, not tight. <strong>Nape to waist</strong> goes from the bone at the base of your neck down your spine to your natural waist. <strong>Back width</strong> runs across the back between the armpit creases, about 10–12 cm below the nape. <strong>Shoulder length</strong> runs from the side of the neck to the shoulder bone. <strong>Body rise</strong>: sit on a hard chair and measure from your waist, down your side, to the chair seat.</p>
+          <p class="note">Every file includes a 10 cm test square. Seam allowances are not included.</p>
+        </div>
+        <div class="preview corner" id="preview"></div>
+      </div>
+
+      <div class="printshops" id="printshops">
+        <div class="grid g2" style="align-items:end;gap:30px">
+          <div><div class="num">WHERE TO PRINT IT</div><h3 style="margin:14px 0 0;font-size:clamp(26px,3vw,36px)">Print shops <em class="gold-l">near you</em></h3></div>
+          <div><label for="pcity" class="note" style="display:block;margin-bottom:8px">Your area</label><select id="pcity"></select></div>
+        </div>
+        <div class="howto">
+          <div><span>01</span>Download the <strong>print shop file</strong>.</div>
+          <div><span>02</span>Ask for an <strong>engineering (blueprint) print</strong>, black and white, at <strong>100% / actual size</strong>, on the sheet size written on the file.</div>
+          <div><span>03</span>Before you leave, <strong>measure the 10 cm square</strong>. If it isn't exactly 10 cm, ask them to reprint without scaling.</div>
+        </div>
+        <div class="pshops" id="pshops"></div>
+      </div>
+    </div>
+  </section>
+</main>
+<div id="printArea"></div>
+<script src="assets/site.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/bodice.js"></script>
+<script src="assets/vendor/leaflet/leaflet.js"></script>
+<script src="assets/altfinder.js"></script>
+<script>
+const $ = (s) => document.querySelector(s);
+/* ── pattern blocks ── */
+let kind = 'women', unit = 'cm', btype = 'top', paper = 'letter';
+const VALS = { women: { ...BLOCK_DEFAULTS.women }, men: { ...BLOCK_DEFAULTS.men } };
+function types() {
+  if (!BLOCK_TYPES[kind].some(([t]) => t === btype)) btype = 'top';
+  $('#btype').innerHTML = BLOCK_TYPES[kind].map(([t, l]) => `<button class="${t === btype ? 'on' : ''}" data-t="${t}">${l}</button>`).join('');
+  document.querySelectorAll('#btype button').forEach(b => b.onclick = () => { saveVals(); btype = b.dataset.t; types(); fields(); draw(); });
+}
+function saveVals() {
+  for (const [k] of blockFields(kind, btype)) {
+    const el = $('#m-' + k); if (!el) continue;
+    const v = parseFloat(el.value); if (v > 0) VALS[kind][k] = unit === 'cm' ? v : v * 2.54;
+  }
+}
+function fields() {
+  $('#fields').innerHTML = blockFields(kind, btype).map(([k, l]) => {
+    const cm = VALS[kind][k], v = unit === 'cm' ? +cm.toFixed(1) : +(cm / 2.54).toFixed(1);
+    return `<div class="field"><label for="m-${k}">${l}</label><input id="m-${k}" type="number" step="0.1" min="1" value="${v}"></div>`;
+  }).join('');
+}
+function readM() {
+  const m = { ...VALS[kind] };
+  for (const [k] of blockFields(kind, btype)) {
+    const v = parseFloat($('#m-' + k).value);
+    if (!(v > 0)) return { err: 'Please fill in every measurement with a number.' };
+    m[k] = unit === 'cm' ? v : v * 2.54;
+  }
+  if (kind === 'men') m.apex = 0;
+  const err = blockCheck(m, kind, btype);
+  return err ? { err } : { m };
+}
+function draw() {
+  const r = readM();
+  if (r.err) { $('#preview').innerHTML = `<p class="note" style="color:#0c0b0a">${r.err}</p>`; return null; }
+  $('#preview').innerHTML = blockSVG(r.m, kind, btype);
+  return r.m;
+}
+function rowsFor(m) { return blockFields(kind, btype).map(([k, l]) => [l, unit === 'cm' ? m[k].toFixed(1) : (m[k] / 2.54).toFixed(1)]); }
+/* first block free, then $5 per block or $25 for the full set (each unlocked block can be re-downloaded and adjusted on this device) */
+const blockKey = () => kind + '-' + btype;
+function saveDraft() { HatilleShop.set('hatille-block-draft', { kind, btype, unit, paper, vals: VALS }); }
+function accessNote() {
+  const S = HatilleShop, owned = Object.keys(S.blocks()), credits = S.credits().length, key = blockKey();
+  let t;
+  if (S.ownsSet()) t = 'You own the full set: every block is unlocked on this device. Download and adjust them as often as you like.';
+  else if (S.ownsBlock(key)) t = 'This block is unlocked on this device. Download and adjust it as often as you like.';
+  else if (!S.freeUsed()) t = 'Your first pattern block is free. After that, each block is $5, or get the full set of all 8 blocks for $25.';
+  else if (credits) t = `You have ${credits} pattern block credit${credits > 1 ? 's' : ''}. Downloading this block will use one.`;
+  else t = `You've used your free block${owned.length ? ' (' + owned.map(k => k.replace('-', "'s ")).join(', ') + ')' : ''}. Unlock this block for $5, or every block for $25.`;
+  $('#blockAccess').textContent = t;
+}
+function paywall() {
+  saveDraft();
+  const p = HATILLE.products.block, title = blockTitle(kind, btype);
+  $('#pdfMsg').innerHTML = `<span style="display:block;border:1px solid var(--gold);padding:18px 20px;margin-top:6px;color:#e4ddd2">You've used your free pattern block. Unlock your <b>${title}</b> for <b>$${p.price}</b>. It stays unlocked on this device, so you can re-download and adjust it any time.<br><span style="display:flex;flex-wrap:wrap;gap:10px;margin-top:14px"><button class="btn" id="unlockBlock" style="background:var(--gold);border-color:var(--gold);color:#0c0b0a">Unlock this block · $${p.price}</button><button class="btn ghost" id="unlockSet">Get the full set · $${HATILLE.products.blockset.price}</button></span><span class="note" style="display:block;margin-top:8px">The full set unlocks all 8 blocks (women's top, dress, skirt, pants, jacket; men's shirt, pants, jacket), each with every piece including sleeves.</span></span>`;
+  $('#unlockBlock').onclick = () => HatilleShop.buy('block');
+  $('#unlockSet').onclick = () => HatilleShop.buy('blockset');
+}
+function canDownload() {
+  const S = HatilleShop, key = blockKey();
+  if (S.ownsBlock(key)) return true;
+  if (S.ownsSet()) { S.grantBlock(key, 'set'); return true; }
+  if (!S.freeUsed()) { S.grantBlock(key, 'free'); return true; }
+  const c = S.credits(); if (c.length) { S.grantBlock(key, c[0].sid); return true; }
+  return false;
+}
+async function makePdf(which) {
+  saveVals();
+  const m = draw(); if (!m) return;
+  if (!canDownload()) { paywall(); return; }
+  accessNote();
+  const msg = $('#pdfMsg'); msg.textContent = 'Preparing your PDF…';
+  try {
+    const u = unit === 'cm' ? 'cm' : 'in';
+    const doc = which === 'shop' ? await blockShopPDF(m, kind, btype, u, rowsFor(m)) : await blockTilePDF(m, kind, btype, u, rowsFor(m), paper);
+    const name = `Hatille-${kind}-${btype}-block-${which === 'shop' ? 'print-shop' : paper}.pdf`;
+    window.__lastPdf = { name, pages: doc.getNumberOfPages(), size: [doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight()] };
+    doc.save(name);
+    msg.textContent = which === 'shop' ? `Downloaded ${name}. Take it to a print shop below and ask for 100% / actual size.` : `Downloaded ${name}. Print at 100% / "Actual size", then check the 10 cm square.`;
+  } catch (e) { msg.textContent = 'Sorry, the PDF could not be made in this browser. Please try Chrome, Edge or Safari.'; console.error(e); }
+}
+document.querySelectorAll('#kind button').forEach(b => b.onclick = () => { saveVals(); document.querySelectorAll('#kind button').forEach(x => x.classList.toggle('on', x === b)); kind = b.dataset.k; types(); fields(); draw(); });
+document.querySelectorAll('#unit button').forEach(b => b.onclick = () => { saveVals(); document.querySelectorAll('#unit button').forEach(x => x.classList.toggle('on', x === b)); unit = b.dataset.u; fields(); draw(); });
+document.querySelectorAll('#paper button').forEach(b => b.onclick = () => { document.querySelectorAll('#paper button').forEach(x => x.classList.toggle('on', x === b)); paper = b.dataset.p; });
+$('#draft').onclick = () => { saveVals(); draw(); };
+$('#pdfShop').onclick = () => makePdf('shop');
+(function resume() {
+  const d = HatilleShop.get('hatille-block-draft', null);
+  if (!d || !/resume=1/.test(location.search)) return;
+  kind = d.kind; btype = d.btype; unit = d.unit; paper = d.paper || 'letter';
+  ['women', 'men'].forEach(k => Object.assign(VALS[k], d.vals[k] || {}));
+  document.querySelectorAll('#kind button').forEach(x => x.classList.toggle('on', x.dataset.k === kind));
+  document.querySelectorAll('#unit button').forEach(x => x.classList.toggle('on', x.dataset.u === unit));
+  document.querySelectorAll('#paper button').forEach(x => x.classList.toggle('on', x.dataset.p === paper));
+  setTimeout(() => { const n = HatilleShop.credits().length; $('#pdfMsg').textContent = HatilleShop.ownsSet() ? 'Welcome back. Your full set is unlocked: choose any block and download it.' : n ? `Welcome back. Your $5 credit is ready: choose a download button to get your ${blockTitle(kind, btype)}.` : ''; }, 50);
+})();
+$('#pdfHome').onclick = () => makePdf('home');
+types(); fields(); draw(); accessNote();
+document.querySelectorAll('#btype, #kind').forEach(el => el.addEventListener('click', () => setTimeout(accessNote, 0)));
+
+/* ── print shops ── */
+$('#pcity').innerHTML = CITIES.map(c => `<option>${c}</option>`).join('');
+function renderPrintShops() {
+  const city = $('#pcity').value;
+  const list = PRINT_SHOPS.filter(p => p.where === 'all' || p.where.includes(city) || p.where === 'mail');
+  list.sort((a, b) => (a.where === 'mail') - (b.where === 'mail') || (b.where !== 'all') - (a.where !== 'all'));
+  const near = city === 'Elsewhere in Ontario' ? 'Ontario' : city.split('·')[0].replace('& GTA', '').trim() + ' Ontario';
+  $('#pshops').innerHTML = list.map(p => `
+    <div class="pshop">
+      <span class="tag">${p.where === 'mail' ? 'By mail · ships to Ontario' : p.where === 'all' ? 'Across Ontario' : city}</span>
+      <h4>${p.name}</h4>
+      ${p.area ? `<div class="note" style="color:#e4ddd2">${p.area}</div>` : ''}
+      <p>${p.note}</p>
+      <div class="links">${p.url ? `<a class="link" href="${p.url}" target="_blank" rel="noopener">Website</a>` : ''}${p.map ? `<a class="link" href="${mapsLink(p.map + ' ' + near)}" target="_blank" rel="noopener">Find near me</a>` : ''}</div>
+    </div>`).join('') + `
+    <div class="pshop" style="border-style:dashed">
+      <span class="tag">Any local shop</span>
+      <h4>Search your area</h4>
+      <p>Any shop that prints for architects or engineers can print your block. Search for "engineering prints", "blueprint printing" or "reprographics".</p>
+      <div class="links"><a class="link" href="${mapsLink('blueprint engineering printing ' + near)}" target="_blank" rel="noopener">Open map</a></div>
+    </div>`;
+}
+$('#pcity').onchange = renderPrintShops;
+if (typeof citySel !== 'undefined' && citySel) { $('#pcity').value = citySel.value; citySel.addEventListener('change', () => { $('#pcity').value = citySel.value; renderPrintShops(); }); }
+renderPrintShops();
+if (location.hash === '#bodice') setTimeout(() => document.getElementById('bodice').scrollIntoView(), 50);
+</script>
+</body>
+</html>

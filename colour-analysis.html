@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Colour Analysis · Hatille</title>
+<meta name="description" content="Upload a photo and see professional colour drapes against your skin tone. Find your season, try on silhouettes for your body shape, and learn fabric care.">
+<link rel="icon" href="assets/img/hatille-icon-black.svg">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<meta name="theme-color" content="#0c0b0a">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hatille">
+<meta property="og:title" content="Colour Analysis · Hatille">
+<meta property="og:description" content="Upload a photo and see professional colour drapes against your skin tone. Find your season, try on silhouettes for your body shape, and learn fabric care.">
+<meta property="og:url" content="https://hatille.com/colour-analysis">
+<link rel="canonical" href="https://hatille.com/colour-analysis">
+<meta property="og:image" content="https://hatille.com/assets/img/og-hatille.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital@1&family=Poppins:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .studio{display:grid;grid-template-columns:1.25fr .75fr;gap:48px;align-items:start}
+  @media (max-width:1000px){.studio{grid-template-columns:1fr}}
+  .stage{display:grid;grid-template-columns:1fr;gap:14px;position:relative}
+  .stage.compare{grid-template-columns:1fr 1fr}
+  .stage canvas{width:100%;height:auto;display:block;background:#d9d4cc;cursor:grab;touch-action:none}
+  .stage .cap{position:absolute;top:12px;font:500 11px var(--sans);letter-spacing:.2em;text-transform:uppercase;background:rgba(12,11,10,.75);color:#fff;padding:6px 10px}
+  .drop{border:1px dashed var(--gold);padding:46px 30px;text-align:center;cursor:pointer;background:rgba(176,141,87,.05)}
+  .drop:hover{background:rgba(176,141,87,.1)}
+  .steps{display:flex;gap:0;margin-bottom:28px;border:1px solid var(--line-dark)}
+  .steps span{flex:1;text-align:center;padding:12px 6px;font:500 10px var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--muted-dark);border-right:1px solid var(--line-dark)}
+  .steps span:last-child{border-right:0}
+  .steps span.on{background:var(--gold);color:var(--black)}
+  .steps span.done{color:var(--gold-light)}
+  .sw{display:flex;flex-wrap:wrap;gap:10px}
+  .sw button{width:44px;height:44px;border-radius:50%;border:2px solid transparent;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+  .sw button.on{border-color:var(--gold-light);transform:scale(1.08)}
+  .choice{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+  .choice button{padding:16px 10px;border:1px solid var(--line-dark);background:transparent;color:#fff;font:400 14px var(--sans);cursor:pointer;display:flex;gap:10px;align-items:center;justify-content:center}
+  .choice button:hover{border-color:var(--gold)}
+  .choice i{width:18px;height:18px;border-radius:50%;display:inline-block;box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}
+  .meter{height:4px;background:var(--line-dark);margin:10px 0 18px}.meter b{display:block;height:100%;background:var(--gold)}
+  .resrow{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line-dark);font-size:14px}
+  .resrow b{font-weight:400;color:var(--gold-light)}
+  input[type=range]{padding:0;accent-color:var(--gold)}
+  .seasons{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:40px}
+  @media (max-width:900px){.seasons{grid-template-columns:repeat(2,1fr)}}
+  .season{border:1px solid var(--line);background:var(--white);padding:18px;cursor:pointer;text-align:left;font:inherit;color:inherit}
+  .season:hover,.season.on{border-color:var(--gold)}
+  .season .strip{display:flex;height:26px;margin-bottom:12px}.season .strip i{flex:1}
+  .season h4{font-size:15px}
+  .tryon{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:start}
+  @media (max-width:1000px){.tryon{grid-template-columns:1fr}}
+  #tcan{width:100%;height:auto;background:#e9e3d8;display:block;cursor:grab;touch-action:none}
+  .tguide{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:46px}
+  @media (max-width:900px){.tguide{grid-template-columns:1fr}}
+  .tguide > div{border:1px solid var(--line-dark);padding:26px;background:var(--charcoal)}
+  .tguide ol{margin:14px 0 0;padding-left:20px;line-height:1.8;color:#d8d2c7;font-size:14px}
+  .tguide ul{list-style:none;margin:12px 0 0;padding:0;font-size:14px;line-height:1.8;color:#d8d2c7}
+  .tguide li.y::before{content:'✓  ';color:var(--gold-light)} .tguide li.n::before{content:'✕  ';color:#d88b80}
+  .tstep{border-top:1px solid var(--line-dark);padding:22px 0}
+  .tstep:first-child{border-top:0;padding-top:0}
+  .tstep h4{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-light);margin:0 0 12px;font-weight:500}
+  .tabs{display:flex;gap:8px;margin-bottom:16px}
+  .tabs button{background:transparent;border:1px solid var(--line-dark);color:#d8d2c7;padding:9px 14px;font:500 11px var(--sans);letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+  .tabs button.on{border-color:var(--gold);color:var(--gold-light)}
+  .tstat{min-height:22px;font-size:13px;color:var(--gold-light);margin-top:12px}
+  .tcanwrap{position:relative}
+  .tbusy{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(12,11,10,.55);color:#fff;font-size:14px;text-align:center;padding:30px}
+  .tbusy.on{display:flex}
+  .checks label{display:flex!important;gap:10px;align-items:center;justify-content:flex-start;font-size:13px;color:#d8d2c7;text-transform:none;letter-spacing:0;margin:8px 0;width:auto}
+  .checks input{width:18px!important;height:18px;margin:0;flex:0 0 auto;accent-color:var(--gold)}
+  .lock{border:1px solid var(--gold);padding:24px;margin-top:20px;background:rgba(176,141,87,.08)}
+  .left{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#a39d94;margin-top:14px}
+  .gbtns{display:flex;flex-wrap:wrap;gap:10px}
+  .fab{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line)}
+  .fab > div{padding:34px 30px;border-bottom:1px solid var(--line);border-right:1px solid var(--line)}
+  .fab > div:nth-child(3n){border-right:0}
+  @media (max-width:900px){.fab{grid-template-columns:1fr}.fab > div{border-right:0}}
+  .fab h4{font-size:20px;font-weight:400;margin:10px 0 8px}
+  .fab dl{margin:14px 0 0;font-size:14px}.fab dt{font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep);margin-top:12px}.fab dd{margin:4px 0 0;color:var(--muted)}
+  .care{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+  @media (max-width:900px){.care{grid-template-columns:1fr 1fr}}
+  .clean{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:30px}
+  @media (max-width:900px){.clean{grid-template-columns:1fr}}
+  .clean > div{border:1px solid var(--line-dark);padding:26px;background:var(--charcoal)}
+  .clean > div.top{border-color:var(--gold)}
+</style>
+</head>
+<body>
+<main>
+  <section class="page-hero dark photo" style="--img:url(/assets/img/ph/silk-monogram.jpg)">
+    <div class="wrap">
+      <div class="eyebrow">Colour Analysis</div>
+      <h1 style="margin-top:22px">Find the colours that make your skin <em class="gold-l">glow</em>.</h1>
+      <p class="lead muted">Upload a photo of yourself and we'll drape you in colour, just like a professional colour consultant would, so you can see warm against cool, light against deep, and finally your full season palette.</p>
+      <div style="margin-top:34px;display:flex;gap:14px;flex-wrap:wrap"><a class="btn" href="#studio">Start draping</a><a class="btn ghost" href="#tryon">Virtual try-on</a><a class="btn ghost" href="#fabrics">Fabric care</a></div>
+    </div>
+  </section>
+
+  <!-- 01 DRAPING STUDIO -->
+  <section class="section dark" id="studio" style="padding-top:60px">
+    <div class="wrap">
+      <div class="num" style="margin-bottom:16px">01 · DRAPING STUDIO</div>
+      <div class="steps" id="steps"><span class="on">1 · Upload</span><span>2 · Position</span><span>3 · Skin tone</span><span>4 · Drape test</span><span>5 · Your palette</span></div>
+      <div class="studio">
+        <div>
+          <div id="dropzone" class="drop">
+            <div class="eyebrow">Upload a portrait</div>
+            <h3 style="margin:14px 0 10px">Drop a photo here or tap to choose</h3>
+            <p class="note">Best results: face the camera in natural daylight, no makeup filters, hair away from your face, and a plain top.</p>
+            <input type="file" id="file" accept="image/*" hidden>
+          </div>
+          <div class="stage hidden" id="stage">
+            <div style="position:relative"><canvas id="ca" width="600" height="760"></canvas><span class="cap" id="capA" style="left:12px"></span></div>
+            <div style="position:relative" class="hidden" id="wrapB"><canvas id="cb" width="600" height="760"></canvas><span class="cap" id="capB" style="left:12px"></span></div>
+          </div>
+          <p class="note" style="margin-top:14px">Your photo stays on your device. It is never uploaded or saved.</p>
+        </div>
+
+        <div id="panel">
+          <div data-step="1">
+            <h3>Let's begin</h3>
+            <p class="muted" style="margin-top:12px">Professional colour analysis compares how different fabric colours change the look of your skin, eyes and features. The right colours make your skin look clear and even. The wrong ones show shadows and dullness.</p>
+            <p class="muted">Upload a clear, front-facing portrait to start.</p>
+          </div>
+          <div data-step="2" class="hidden">
+            <h3>Position your face</h3>
+            <p class="muted" style="margin-top:12px">Drag the photo so your chin sits just above the fabric drape, with your face centred.</p>
+            <label style="margin-top:24px" for="zoom">Zoom</label><input type="range" id="zoom" min="0.6" max="3" step="0.01" value="1">
+            <button class="btn" style="margin-top:26px" id="toSkin">Next: read my skin tone</button>
+          </div>
+          <div data-step="3" class="hidden">
+            <h3>Tap your cheek</h3>
+            <p class="muted" style="margin-top:12px">Click or tap on an evenly lit area of your cheek. Avoid shadows, highlights and makeup. You can tap a few times to compare.</p>
+            <div id="skinOut" style="margin-top:20px"></div>
+            <button class="btn hidden" style="margin-top:20px" id="toTest">Next: drape test</button>
+          </div>
+          <div data-step="4" class="hidden">
+            <h3 id="tq">Gold or silver?</h3>
+            <p class="muted" style="margin-top:10px">Compare the two drapes. Choose the one where your skin looks smoother and brighter, your eyes clearer, and shadows softer.</p>
+            <div class="meter"><b id="tm" style="width:0"></b></div>
+            <div class="choice" id="tch"></div>
+            <button class="link" style="background:none;border:0;border-bottom:1px solid var(--gold);color:#fff;margin-top:20px;cursor:pointer;padding:0 0 6px" id="skipTest">Skip the test</button>
+          </div>
+          <div data-step="5" class="hidden">
+            <div class="eyebrow">Your season</div>
+            <h2 style="margin:14px 0 10px" id="season">—</h2>
+            <p class="muted" id="seasonDesc"></p>
+            <div id="seasonMeta" style="margin:18px 0 24px"></div>
+            <div class="eyebrow" style="margin-bottom:12px">Tap a colour to drape it</div>
+            <div class="sw" id="palette"></div>
+            <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn" href="#tryon">Try on clothes</a><button class="btn ghost" id="redo">Start again</button></div>
+            <div class="dl-band" style="margin-top:26px;background:transparent;border-color:var(--gold)"><div><div class="eyebrow">Take your season with you</div><p style="margin:8px 0 0;color:#e4ddd2;font-size:14px">Your printable Personal Colour Palette Guide with swatch card and fan.</p></div><a class="btn" href="/shop#downloads" style="background:var(--gold);border-color:var(--gold);color:#0c0b0a">Get my guide · $15</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 seasons explorer -->
+  <section class="section tight">
+    <div class="wrap">
+      <div class="num" style="margin-bottom:16px">THE 12 SEASONS</div>
+      <div class="grid g2" style="align-items:end">
+        <h2>Explore every <em class="gold-d">palette</em>.</h2>
+        <p class="muted">Each season is a mix of undertone (warm or cool), depth (light or deep) and clarity (bright or soft). Tap any season to drape your photo in it.</p>
+      </div>
+      <div class="seasons" id="seasons"></div>
+    </div>
+  </section>
+
+  <!-- 02 VIRTUAL TRY-ON -->
+  <section class="section dark" id="tryon">
+    <div class="wrap">
+      <div class="num" style="margin-bottom:16px">02 · VIRTUAL TRY-ON</div>
+      <div class="grid g2" style="align-items:end;margin-bottom:40px">
+        <h2>See it on <em class="gold-l">you</em>.</h2>
+        <p class="muted">Upload a full-length photo and we'll find your shoulders, waist and hips, then fit clothes to your body with the light of your own photo. Try a Hatille silhouette in your best colours, or a piece from any shop. Your photo never leaves your device.</p>
+      </div>
+
+      <div class="tguide">
+        <div>
+          <div class="eyebrow">How it works</div>
+          <ol>
+            <li><b>Add your photo.</b> A full-length photo, standing straight and facing the camera.</li>
+            <li><b>Choose a piece.</b> Pick a Hatille silhouette and colour, or upload a product photo from any shop.</li>
+            <li><b>We fit it to you.</b> The garment snaps to your shoulders and hips and takes on your photo's lighting.</li>
+            <li><b>Fine-tune and save.</b> Drag to move, use the sliders to adjust size and length, then save your look.</li>
+          </ol>
+          <p class="note" style="margin-top:14px">You get <b>2 free try-ons</b>. Book a consultation for unlimited try-ons with a Hatille consultant.</p>
+        </div>
+        <div>
+          <div class="eyebrow">The photo you need</div>
+          <ul>
+            <li class="y">Full length, head to knees at least (head to toe is best)</li>
+            <li class="y">Standing straight, facing the camera, arms slightly away from your body</li>
+            <li class="y">Fitted, simple clothes (leggings and a fitted top are ideal)</li>
+            <li class="y">Even light, like facing a window in daylight, against a plain wall</li>
+            <li class="n">No side angles, sitting, crossed arms or bags over the shoulder</li>
+            <li class="n">No baggy coats or big jackets (they hide your shape)</li>
+          </ul>
+          <div class="eyebrow" style="margin-top:20px">Product photos from a shop</div>
+          <ul>
+            <li class="y">Best: the garment laid flat or on a hanger, on a plain background</li>
+            <li class="y">Also works: a model wearing it, facing forward</li>
+            <li class="n">Avoid: busy backgrounds, white clothes on white backgrounds, side views</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tryon">
+        <div>
+          <div class="tstep">
+            <h4>1 · Your photo</h4>
+            <div class="field"><label for="tfile">Full-length photo</label><input type="file" id="tfile" accept="image/*"></div>
+            <div class="tstat" id="tstat" role="status" aria-live="polite"></div>
+          </div>
+          <div class="tstep">
+            <h4>2 · Your shape (optional)</h4>
+            <div class="grid g4" style="gap:12px">
+              <div class="field"><label for="mS">Shoulders</label><input id="mS" type="number" value="100"></div>
+              <div class="field"><label for="mB">Bust</label><input id="mB" type="number" value="92"></div>
+              <div class="field"><label for="mW">Waist</label><input id="mW" type="number" value="72"></div>
+              <div class="field"><label for="mH">Hips</label><input id="mH" type="number" value="100"></div>
+            </div>
+            <p class="note" style="margin-top:-6px">Any unit works (cm or inches), as long as all four match.</p>
+            <button class="btn sm" id="shapeBtn">Find my shape</button>
+            <div id="shapeOut" style="margin-top:20px"></div>
+          </div>
+          <div class="tstep">
+            <h4>3 · Choose a piece</h4>
+            <div class="tabs"><button class="on" data-tab="sil">Hatille silhouettes</button><button data-tab="shop">From any shop</button></div>
+            <div id="tabSil">
+              <div class="gbtns" id="gbtns"></div>
+              <div class="eyebrow" style="margin:20px 0 12px">Colour</div>
+              <div class="sw" id="tsw"></div>
+            </div>
+            <div id="tabShop" class="hidden">
+              <div class="field"><label for="gtype">What is it?</label>
+                <select id="gtype"><option value="dress">Dress or jumpsuit</option><option value="top">Top, blouse or shirt</option><option value="jacket">Jacket, blazer or coat</option><option value="skirt">Skirt</option><option value="pants">Trousers or shorts</option></select></div>
+              <div class="field"><label for="gfile">Product photo</label><input type="file" id="gfile" accept="image/*"></div>
+              <p class="note">Save the product photo from the shop's website (press and hold on a phone, or right-click and "Save image" on a computer), then upload it here.</p>
+            </div>
+          </div>
+          <div class="tstep" id="tadj">
+            <h4>4 · Fine-tune</h4>
+            <div class="grid g2" style="gap:16px">
+              <div><label for="aSize">Size</label><input type="range" id="aSize" min="0.7" max="1.4" step="0.01" value="1"></div>
+              <div><label for="aWidth">Width</label><input type="range" id="aWidth" min="0.7" max="1.4" step="0.01" value="1"></div>
+              <div><label for="aLen">Length</label><input type="range" id="aLen" min="0.7" max="1.5" step="0.01" value="1"></div>
+              <div><label for="aLight">Lighting</label><input type="range" id="aLight" min="0" max="1" step="0.01" value="0.8"></div>
+            </div>
+            <div class="checks" style="margin-top:12px"><label><input type="checkbox" id="oArms" checked> Arms and hands in front</label><label><input type="checkbox" id="oHair" checked> Hair in front</label></div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px"><button class="btn sm ghost" id="refit">Re-fit automatically</button><button class="btn sm" id="saveLook">Save my look</button></div>
+            <p class="note" style="margin-top:12px">Drag the garment on the photo to move it.</p>
+          </div>
+          <div class="left" id="tleft"></div>
+          <div class="lock hidden" id="tlock">
+            <div class="eyebrow">You've used your 2 free try-ons</div>
+            <p class="muted" style="margin:12px 0 18px">Book a consultation and a Hatille consultant will try on as many pieces as you like with you, live, in your best colours and silhouettes.</p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn sm" href="/book">Book a consultation</a><a class="btn sm ghost" href="https://cal.com/hatille/discovery" target="_blank" rel="noopener">Free 15-minute call</a></div>
+          </div>
+        </div>
+        <div>
+          <div class="tcanwrap"><canvas id="tcan" width="640" height="900"></canvas><div class="tbusy" id="tbusy"></div></div>
+          <p class="note" style="margin-top:10px">A preview for colour, length and silhouette. Fabric drape and true fit can only be judged in person.</p>
+          <div class="panel" style="margin-top:20px">
+            <div class="eyebrow">Boutiques near you</div>
+            <p class="muted" style="margin:12px 0 16px">Shop your silhouettes and colours at boutiques nearby. Partner boutique collections are coming to Hatille try-on soon.</p>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center"><select id="bcity" style="max-width:320px"></select><a class="btn sm" id="bgo" target="_blank" rel="noopener">Find boutiques</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 FABRICS -->
+  <section class="section white" id="fabrics">
+    <div class="wrap">
+      <div class="num" style="margin-bottom:16px">03 · FABRICS & CARE FACTORS</div>
+      <div class="grid g2" style="align-items:end;margin-bottom:50px">
+        <h2>Know your fabric before you <em class="gold-d">buy</em>.</h2>
+        <p class="muted">Read the care label before you shop. How a fabric wears, wrinkles and washes decides how long a piece will look new.</p>
+      </div>
+      <div class="fab" id="fab"></div>
+    </div>
+  </section>
+
+  <!-- 04 LAUNDRY & CLEANERS -->
+  <section class="section beige">
+    <div class="wrap">
+      <div class="num" style="margin-bottom:16px">04 · LAUNDRY CARE</div>
+      <h2 style="margin-bottom:46px">Laundry rules we <em class="gold-d">live by</em>.</h2>
+      <div class="care">
+        <div><h4>Wash less, wash cold</h4><p class="muted" style="margin-top:8px">Most clothes only need a wash after several wears. Cold water (30°C or below) protects colour and fibres and saves energy.</p></div>
+        <div><h4>Inside out, zipped up</h4><p class="muted" style="margin-top:8px">Turn darks and prints inside out, close zips and hooks, and use mesh bags for delicates and lingerie.</p></div>
+        <div><h4>Skip the dryer</h4><p class="muted" style="margin-top:8px">Heat shrinks and fades. Dry knits flat, hang shirts on wide hangers, and steam instead of ironing when you can.</p></div>
+        <div><h4>Treat stains fast</h4><p class="muted" style="margin-top:8px">Blot, never rub. Use cold water for protein stains (blood, sweat, makeup) and take silk or structured pieces to a professional.</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="section dark">
+    <div class="wrap">
+      <div class="num" style="margin-bottom:16px">05 · RECOMMENDED CLEANERS</div>
+      <div class="grid g2" style="align-items:end">
+        <h2>Trusted cleaners in <em class="gold-l">Ontario</em>.</h2>
+        <div><label for="ccity">Your location</label><select id="ccity"></select></div>
+      </div>
+      <div class="clean" id="clean"></div>
+      <p class="note" style="margin-top:22px">Picked from expert lists and reviews. Confirm hours and services before you visit.</p>
+    </div>
+  </section>
+</main>
+<script src="assets/site.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/colour.js"></script>
+<script src="assets/tryon.js"></script>
+<script>
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const A = new Drape($('#ca')), B = new Drape($('#cb'));
+let img = null, skin = null, votes = {}, ti = 0, season = null;
+
+function step(n) {
+  $$('#steps span').forEach((s, i) => { s.classList.toggle('on', i === n - 1); s.classList.toggle('done', i < n - 1); });
+  $$('#panel [data-step]').forEach(d => d.classList.toggle('hidden', +d.dataset.step !== n));
+}
+function compare(on) { $('#stage').classList.toggle('compare', on); $('#wrapB').classList.toggle('hidden', !on); }
+function syncB() { B.zoom = A.zoom; B.ox = A.ox; B.oy = A.oy; B.draw(); }
+A.onMove = syncB;
+B.onMove = () => { A.zoom = B.zoom; A.ox = B.ox; A.oy = B.oy; A.draw(); };
+
+$('#dropzone').onclick = () => $('#file').click();
+$('#dropzone').ondragover = e => { e.preventDefault(); };
+$('#dropzone').ondrop = e => { e.preventDefault(); if (e.dataTransfer.files[0]) load(e.dataTransfer.files[0]); };
+$('#file').onchange = e => e.target.files[0] && load(e.target.files[0]);
+function load(f) {
+  const i = new Image();
+  i.onload = () => {
+    img = i; A.setImage(i); B.setImage(i);
+    // start with the face roughly in the upper half
+    A.zoom = 1.15; A.oy = A.c.height * 0.12; A.draw(); syncB();
+    $('#dropzone').classList.add('hidden'); $('#stage').classList.remove('hidden');
+    A.color = '#8a8580'; A.draw(); $('#capA').textContent = 'Neutral drape';
+    step(2);
+  };
+  i.src = URL.createObjectURL(f);
+}
+$('#zoom').oninput = e => { A.zoom = +e.target.value; A.draw(); syncB(); };
+$('#toSkin').onclick = () => {
+  step(3); A.picking = true; A.showDrape = true; $('#capA').textContent = 'Tap your cheek';
+  $('#ca').style.cursor = 'crosshair';
+};
+A.onPick = (rgb, px, py) => {
+  if (!rgb) return;
+  skin = analyseSkin(rgb);
+  A.draw();
+  const x = A.x; x.strokeStyle = '#fff'; x.lineWidth = 2; x.beginPath(); x.arc(px, py, 10, 0, 7); x.stroke();
+  $('#skinOut').innerHTML = `
+    <div style="display:flex;gap:16px;align-items:center;margin-bottom:12px"><span style="width:56px;height:56px;border-radius:50%;background:${toHex(rgb)};box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)"></span>
+    <div><div class="eyebrow">Skin reading</div><div style="font-size:14px;color:var(--muted-dark)">${toHex(rgb).toUpperCase()}</div></div></div>
+    <div class="resrow"><span>Undertone</span><b>${skin.undertone}</b></div>
+    <div class="resrow"><span>Depth</span><b>${skin.depth}</b></div>
+    <div class="resrow"><span>Clarity</span><b>${skin.clarity}</b></div>`;
+  $('#toTest').classList.remove('hidden');
+};
+$('#toTest').onclick = () => { A.picking = false; $('#ca').style.cursor = 'grab'; votes = {}; ti = 0; compare(true); step(4); test(); };
+function test() {
+  const t = DRAPE_TESTS[ti];
+  $('#tq').textContent = t.q; $('#tm').style.width = (ti / DRAPE_TESTS.length * 100) + '%';
+  A.color = t.a.hex; A.sheen = !!t.a.sheen; B.color = t.b.hex; B.sheen = !!t.b.sheen; syncB(); A.draw(); B.draw();
+  $('#capA').textContent = 'A · ' + t.a.name; $('#capB').textContent = 'B · ' + t.b.name;
+  $('#tch').innerHTML = [t.a, t.b].map((o, i) => `<button data-i="${i}"><i style="background:${o.hex}"></i>${i ? 'B' : 'A'} · ${o.name}</button>`).join('');
+}
+$('#tch').onclick = e => {
+  const b = e.target.closest('button'); if (!b) return;
+  const t = DRAPE_TESTS[ti], pick = +b.dataset.i ? t.b : t.a;
+  for (const [k, v] of Object.entries(pick.vote)) votes[k] = (votes[k] || 0) + v;
+  ti++; ti < DRAPE_TESTS.length ? test() : finish();
+};
+$('#skipTest').onclick = () => finish();
+function finish() {
+  compare(false);
+  season = seasonFrom(skin || { undertone: 'Neutral', depth: 'Medium', clarity: 'Balanced' }, votes);
+  showSeason(season); step(5);
+  $('#tm').style.width = '100%';
+}
+function showSeason(name) {
+  const s = SEASONS[name]; season = name; try { localStorage.setItem('hatille-season', JSON.stringify(name)); } catch (e) {}
+  $('#season').textContent = name; $('#seasonDesc').textContent = s.desc;
+  $('#seasonMeta').innerHTML = `<div class="resrow"><span>Season family</span><b>${s.family}</b></div><div class="resrow"><span>Best metals</span><b>${s.metals}</b></div>` +
+    (skin ? `<div class="resrow"><span>Your skin</span><b>${skin.undertone} · ${skin.depth} · ${skin.clarity}</b></div>` : '');
+  $('#palette').innerHTML = s.colors.map((c, i) => `<button style="background:${c}" data-c="${c}" class="${i ? '' : 'on'}" aria-label="Drape ${c}"></button>`).join('');
+  A.color = s.colors[0]; A.sheen = false; A.draw(); $('#capA').textContent = name;
+  $$('.season').forEach(x => x.classList.toggle('on', x.dataset.s === name));
+  fillTrySwatches();
+}
+$('#palette').onclick = e => { const b = e.target.closest('button'); if (!b) return; $$('#palette button').forEach(x => x.classList.toggle('on', x === b)); A.color = b.dataset.c; A.draw(); };
+$('#redo').onclick = () => { skin = null; votes = {}; compare(false); $('#stage').classList.add('hidden'); $('#dropzone').classList.remove('hidden'); $('#file').value = ''; step(1); };
+
+$('#seasons').innerHTML = Object.entries(SEASONS).map(([n, s]) => `<button class="season" data-s="${n}"><div class="strip">${s.colors.slice(0, 8).map(c => `<i style="background:${c}"></i>`).join('')}</div><h4>${n}</h4><div class="note">${s.family}</div></button>`).join('');
+$('#seasons').onclick = e => {
+  const b = e.target.closest('.season'); if (!b) return;
+  if (!img) { document.getElementById('studio').scrollIntoView({ behavior: 'smooth' }); toast('Upload a portrait first to drape a season'); showSeasonPreview(b.dataset.s); return; }
+  compare(false); A.picking = false; showSeason(b.dataset.s); step(5); document.getElementById('studio').scrollIntoView({ behavior: 'smooth' });
+};
+function showSeasonPreview(n) { $$('.season').forEach(x => x.classList.toggle('on', x.dataset.s === n)); }
+
+/* ── try-on ── */
+const TO = window.HatilleTryOn, tc = $('#tcan');
+const GTYPE = { wrap: 'dress', aline: 'dress', sheath: 'dress', pencil: 'dress', blazer: 'jacket', wideleg: 'dress', empire: 'dress' };
+let P = null, Gm = null, Tfit = null, gKey = null, gColor = '#0c0b0a', gUploadId = null, adj = { dx: 0, dy: 0 };
+const tstat = t => $('#tstat').textContent = t || '';
+const busy = t => { $('#tbusy').textContent = t || ''; $('#tbusy').classList.toggle('on', !!t); };
+/* free limit: 2 different pieces per visitor; consultation clients and consultants unlock with the private link */
+const FREE = 2, LS = k => { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }, SS = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+if (new URLSearchParams(location.search).get('consult') === 'hx-crystel-7q2m') SS('hatille-consult', true);
+const unlimited = () => LS('hatille-consult') === true;
+const used = () => LS('hatille-tryons') || [];
+function allow(id) { if (unlimited()) return true; const u = used(); if (u.includes(id)) return true; if (u.length >= FREE) { $('#tlock').classList.remove('hidden'); $('#tlock').scrollIntoView({ behavior: 'smooth', block: 'center' }); return false; } u.push(id); SS('hatille-tryons', u); return true; }
+function showLeft(initial) { if (unlimited()) { $('#tleft').textContent = 'Consultation mode · unlimited try-ons'; return; } const n = Math.max(0, FREE - used().length); $('#tleft').textContent = n ? `${n} free try-on${n > 1 ? 's' : ''} left` : 'Last free try-on. Book a consultation for more.'; if (!n && initial) $('#tlock').classList.remove('hidden'); }
+showLeft(true);
+
+function placeholder() {
+  tc.width = 640; tc.height = 900; const x = tc.getContext('2d'); x.fillStyle = '#e9e3d8'; x.fillRect(0, 0, 640, 900);
+  x.fillStyle = '#8a8379'; x.font = '500 13px Poppins, sans-serif'; x.textAlign = 'center'; x.fillText('UPLOAD A FULL-LENGTH PHOTO', 320, 450);
+}
+placeholder();
+function opts() { return { light: +$('#aLight').value, arms: $('#oArms').checked, hair: $('#oHair').checked }; }
+function refit() { if (!P || !Gm) return; Tfit = TO.fit(P, Gm, { size: +$('#aSize').value, width: +$('#aWidth').value, length: +$('#aLen').value, dx: adj.dx, dy: adj.dy }); draw(); }
+function draw() { if (!P) return placeholder(); TO.render(tc, P, Gm, Tfit, opts()); }
+['aSize', 'aWidth', 'aLen'].forEach(id => $('#' + id).oninput = refit);
+['aLight', 'oArms', 'oHair'].forEach(id => $('#' + id).oninput = draw);
+$('#refit').onclick = () => { adj = { dx: 0, dy: 0 }; $('#aSize').value = 1; $('#aWidth').value = 1; $('#aLen').value = 1; refit(); };
+$('#saveLook').onclick = () => { if (!P) return; const a = document.createElement('a'); a.download = 'my-hatille-look.jpg'; a.href = tc.toDataURL('image/jpeg', 0.92); a.click(); };
+
+$('#tfile').onchange = async e => {
+  const f = e.target.files[0]; if (!f) return;
+  const i = new Image(); i.src = URL.createObjectURL(f); await i.decode();
+  busy('Loading the fitting tools… (first time only, best on Wi-Fi)');
+  try {
+    P = await TO.analysePerson(i, t => busy(t));
+    busy('');
+    if (!P.geom) tstat('We couldn\'t find your shoulders in this photo. You can still drag and resize, or try a straighter, full-length photo.');
+    else if (!P.geom.hipsOk) tstat('Found your shoulders but not your hips. A full-length photo gives a better fit.');
+    else if (!P.seg) tstat('Body found. (Arms-in-front is unavailable on this device.)');
+    else tstat('Body found. Now choose a piece.');
+    adj = { dx: 0, dy: 0 }; if (Gm) refit(); else draw();
+  } catch (err) { console.error(err); busy(''); tstat('Sorry, the fitting tools could not load. Please check your connection and try again in Chrome, Edge or Safari.'); }
+};
+function useSilhouette(k) {
+  if (!allow('sil:' + k)) return; showLeft();
+  gKey = k; $$('#gbtns .chip').forEach(c => c.classList.toggle('on', c.dataset.g === k));
+  Gm = TO.silhouetteGarment(GARMENTS[k].d, gColor, GTYPE[k] || 'dress'); adj = { dx: 0, dy: 0 };
+  if (!P) { tstat('Add your photo first to see it on you.'); return; } refit();
+}
+$('#gbtns').onclick = e => { const b = e.target.closest('[data-g]'); if (b) useSilhouette(b.dataset.g); };
+function fillTrySwatches() {
+  const cols = season ? SEASONS[season].colors : ['#0c0b0a', '#ffffff', '#b08d57', '#e2d7c6', '#7a5c2c', '#1f3f6b', '#7b1e1e', '#2f5d50'];
+  if (!cols.includes(gColor)) gColor = cols[0];
+  $('#tsw').innerHTML = cols.map(c => `<button style="background:${c}" data-c="${c}" class="${c === gColor ? 'on' : ''}" aria-label="Colour ${c}"></button>`).join('');
+}
+$('#tsw').onclick = e => { const b = e.target.closest('button'); if (!b) return; gColor = b.dataset.c; $$('#tsw button').forEach(x => x.classList.toggle('on', x === b)); if (gKey && Gm && !gUploadId) { Gm = TO.silhouetteGarment(GARMENTS[gKey].d, gColor, GTYPE[gKey] || 'dress'); refit(); } };
+$('#gbtns').innerHTML = Object.keys(GARMENTS).map(k => `<button class="chip" data-g="${k}">${GARMENTS[k].name}</button>`).join('');
+fillTrySwatches();
+$$('.tabs button').forEach(b => b.onclick = () => { $$('.tabs button').forEach(x => x.classList.toggle('on', x === b)); $('#tabSil').classList.toggle('hidden', b.dataset.tab !== 'sil'); $('#tabShop').classList.toggle('hidden', b.dataset.tab !== 'shop'); });
+async function useUpload() {
+  const f = $('#gfile').files[0]; if (!f) return;
+  const id = 'up:' + f.name + ':' + f.size; if (!allow(id)) { $('#gfile').value = ''; return; } showLeft();
+  const i = new Image(); i.src = URL.createObjectURL(f); await i.decode();
+  busy('Cutting out the garment…');
+  try {
+    Gm = await TO.prepareGarment(i, $('#gtype').value); gUploadId = id; gKey = null; $$('#gbtns .chip').forEach(c => c.classList.remove('on'));
+    busy(''); tstat(Gm.note || 'Garment ready.'); adj = { dx: 0, dy: 0 };
+    if (!P) { tstat('Garment ready. Add your photo to see it on you.'); return; } refit();
+  } catch (err) { console.error(err); busy(''); tstat('Sorry, that photo could not be used. Try another product photo.'); }
+}
+$('#gfile').onchange = useUpload;
+$('#gtype').onchange = () => { if (gUploadId) useUpload(); };
+$('#shapeBtn').onclick = () => {
+  const m = { shoulders: +$('#mS').value, bust: +$('#mB').value, waist: +$('#mW').value, hips: +$('#mH').value };
+  if (!(m.shoulders && m.bust && m.waist && m.hips)) { $('#shapeOut').innerHTML = '<p class="note">Please enter all four measurements.</p>'; return; }
+  const shape = bodyShape(m), adv = SHAPE_ADVICE[shape];
+  $('#shapeOut').innerHTML = `<div class="eyebrow">Your body shape</div><h3 style="margin:12px 0 10px">${shape}</h3><p class="muted">${adv.tip}</p><p class="note">Recommended for you: ${adv.garments.map(k => GARMENTS[k].name).join(', ')}.</p>`;
+  $('#gbtns').innerHTML = adv.garments.map(k => `<button class="chip" data-g="${k}">★ ${GARMENTS[k].name}</button>`).join('') + Object.keys(GARMENTS).filter(k => !adv.garments.includes(k)).map(k => `<button class="chip" data-g="${k}" style="opacity:.6">${GARMENTS[k].name}</button>`).join('');
+};
+/* drag to move */
+let drag = null;
+const cpos = e => { const r = tc.getBoundingClientRect(), t = e.touches ? e.touches[0] : e; return [(t.clientX - r.left) * tc.width / r.width, (t.clientY - r.top) * tc.height / r.height]; };
+tc.addEventListener('pointerdown', e => { if (!Gm || !P) return; drag = cpos(e); tc.setPointerCapture(e.pointerId); });
+tc.addEventListener('pointermove', e => { if (!drag) return; const p = cpos(e); adj.dx += p[0] - drag[0]; adj.dy += p[1] - drag[1]; drag = p; refit(); });
+['pointerup', 'pointercancel'].forEach(t => tc.addEventListener(t, () => drag = null));
+$('#bcity').innerHTML = CITIES.map(c => `<option>${c}</option>`).join('');
+const setB = () => { const c = $('#bcity').value; $('#bgo').href = mapsLink('women\'s clothing boutique near ' + (c === 'Elsewhere in Ontario' ? 'me Ontario' : c.split('·')[0] + ' Ontario')); };
+$('#bcity').onchange = setB; setB();
+
+/* ── fabrics ── */
+const FABRICS = [
+  ['Cotton', 'Natural · breathable', 'Soft, breathable and easy to wear. Can shrink and wrinkle.', 'Machine wash cold, line dry, iron while slightly damp.', 'Everyday shirts, tees, summer dresses'],
+  ['Linen', 'Natural · cooling', 'The coolest summer fabric. It wrinkles easily, and that\'s part of its charm.', 'Gentle cold wash or hand wash, hang dry, steam. Dry clean structured pieces.', 'Summer suits, wide-leg trousers, resort wear'],
+  ['Silk', 'Natural · luxury', 'Lustrous and strong but delicate. Water and perfume can mark it.', 'Dry clean, or hand wash in cool water with silk detergent. Never wring. Iron inside out on low.', 'Blouses, slip dresses, scarves, bridal'],
+  ['Wool', 'Natural · warm', 'Warm, breathable and naturally wrinkle-resistant. Hot water felts it.', 'Air out between wears, brush, and dry clean suits. Hand wash knits cold and dry flat.', 'Suits, coats, winter trousers'],
+  ['Cashmere', 'Natural · luxury', 'Ultra-soft and light but prone to pilling.', 'Hand wash cold, dry flat, de-pill with a cashmere comb, and store folded with cedar.', 'Sweaters, wraps, scarves'],
+  ['Polyester', 'Synthetic · durable', 'Holds shape and colour, dries fast, but doesn\'t breathe and can hold odours.', 'Machine wash warm or cold, low heat dry, cool iron.', 'Workwear, activewear, linings'],
+  ['Viscose / Rayon', 'Semi-synthetic · drapey', 'Beautiful drape, but weak when wet and can shrink.', 'Hand wash cold or dry clean. Don\'t wring. Dry flat or hang.', 'Flowing dresses, blouses'],
+  ['Denim', 'Cotton twill · sturdy', 'Tough and ages beautifully. Indigo bleeds.', 'Wash rarely, inside out, cold. Hang dry to avoid shrinking.', 'Jeans, jackets, skirts'],
+  ['Satin, lace & tulle', 'Bridal · delicate', 'Snags, marks and yellows easily. Beading adds weight and risk.', 'Professional cleaning only, ideally a gown specialist. Store in acid-free tissue, away from light.', 'Wedding gowns, veils, eveningwear'],
+];
+$('#fab').innerHTML = FABRICS.map(([n, t, d, c, u]) => `<div><span class="tag">${t}</span><h4>${n}</h4><p class="muted" style="font-size:14px;margin:0">${d}</p><dl><dt>Care</dt><dd>${c}</dd><dt>Best for</dt><dd>${u}</dd></dl></div>`).join('');
+
+/* ── cleaners ── */
+$('#ccity').innerHTML = CITIES.map(c => `<option>${c}</option>`).join('');
+function renderClean() {
+  const c = $('#ccity').value;
+  let list = SHOPS.filter(s => s.types.includes('cleaning') && (s.city === c || s.pinned));
+  list.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
+  $('#clean').innerHTML = list.map((s, i) => `<div class="${i === 0 ? 'top' : ''}"><span class="tag">${s.pinned ? 'Hatille #1 pick' : s.city}</span><h4 style="margin:14px 0 6px;font-weight:400;font-size:19px">${s.name}</h4><div class="note">${s.area}</div><p class="muted" style="font-size:14px;margin:12px 0">${s.note}</p><div style="font-size:12px;color:var(--gold-light);margin-bottom:14px">${s.cred}</div><a class="link" href="${mapsLink(s.name + ' ' + s.area + ' Ontario')}" target="_blank" rel="noopener">Directions & reviews</a></div>`).join('') +
+    `<div style="border-style:dashed;background:transparent"><span class="tag">More near you</span><h4 style="margin:14px 0 6px;font-weight:400;font-size:19px">Search ${c === 'Elsewhere in Ontario' ? 'your town' : c}</h4><p class="muted" style="font-size:14px">See top-rated dry cleaners and laundry services near you.</p><a class="link" href="${mapsLink('best dry cleaners near ' + (c === 'Elsewhere in Ontario' ? 'me Ontario' : c.split('·')[0] + ' Ontario'))}" target="_blank" rel="noopener">Open map</a></div>`;
+}
+$('#ccity').onchange = renderClean; renderClean();
+</script>
+</body>
+</html>

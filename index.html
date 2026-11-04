@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hatille</title>
+<meta name="description" content="Hatille — fashion, health and wellness. Colour analysis, alteration finder, wellness and handmade bridal pieces, Ontario.">
+<link rel="icon" href="assets/img/hatille-icon-black.svg">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<meta name="theme-color" content="#0c0b0a">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hatille">
+<meta property="og:title" content="Hatille">
+<meta property="og:description" content="Hatille — fashion, health and wellness. Colour analysis, alteration finder, wellness and handmade bridal pieces, Ontario.">
+<meta property="og:url" content="https://hatille.com/">
+<link rel="canonical" href="https://hatille.com/">
+<meta property="og:image" content="https://hatille.com/assets/img/og-hatille.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital@1&family=Poppins:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .hero{display:grid;grid-template-columns:minmax(0,44%) 1fr;min-height:clamp(560px,calc(100vh - 64px),900px);background:#0c0b0a;color:#fff}
+  .hero .copy{display:flex;flex-direction:column;justify-content:center;padding:70px clamp(28px,5vw,80px);position:relative}
+  .hero .pic{position:relative;overflow:hidden}
+  .hero .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:30% 45%}
+  .hero h1{font-size:clamp(36px,4.2vw,66px)}
+  .hero .lead{color:#d9d2c6;margin-top:24px}
+  .hero .actions{display:flex;gap:16px;flex-wrap:wrap;margin-top:40px}
+  @media (max-width:900px){.hero{grid-template-columns:1fr;min-height:0}.hero .pic{height:56vh;min-height:320px;order:-1}.hero .copy{padding:44px 24px 64px}}
+  .hud{position:absolute;z-index:2;top:28px;right:32px;font:500 11px var(--sans);letter-spacing:.24em;color:#fff;text-align:right;line-height:2;text-shadow:0 1px 8px rgba(0,0,0,.9)}
+  .coll{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  .coll a{text-decoration:none;color:inherit}
+  .coll .ph-frame{aspect-ratio:3/4}
+  .coll h3{font-size:20px;margin:18px 0 6px}
+  @media (max-width:900px){.coll{grid-template-columns:1fr 1fr}}
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:34px}
+  .pillars .ph-frame{aspect-ratio:4/3;margin-bottom:24px}
+  @media (max-width:900px){.pillars{grid-template-columns:1fr}}
+  .svc{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+  .svc a{padding:48px 40px 52px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);text-decoration:none;color:inherit;transition:background .3s;position:relative}
+  .svc a:nth-child(3n){border-right:0}
+  .svc a:hover{background:var(--white)}
+  .svc a:hover .arrow{transform:translateX(6px);color:var(--gold)}
+  .svc h3{margin:22px 0 14px}
+  .arrow{display:inline-block;transition:transform .3s;font-size:22px;margin-top:18px}
+  @media (max-width:900px){.svc{grid-template-columns:1fr}.svc a{border-right:0}.hud{display:none}}
+  .band{background:url(assets/img/hatille-print-black-tonal.svg) 0 0/120px 120px #0c0b0a}
+</style>
+</head>
+<body>
+<main>
+  <section class="hero dark">
+    <div class="copy gridlines">
+      <div class="eyebrow">Welcome to Hatille</div>
+      <h1 style="margin-top:20px">Style is how you take care of yourself, <em class="gold-l">made visible.</em></h1>
+      <p class="lead">Colour analysis, personal style, the perfect fit and handmade bridal pieces, plus virtual consultations with a Hatille consultant from anywhere.</p>
+      <div class="actions">
+        <a class="btn" href="/book" style="background:var(--gold);border-color:var(--gold);color:#0c0b0a">Book a consultation</a>
+        <a class="btn ghost" href="/colour-analysis" style="color:#fff;border-color:rgba(255,255,255,.7)">Find your colours</a>
+      </div>
+    </div>
+    <div class="pic">
+      <img src="assets/img/ph/atelier.jpg" alt="The Hatille bridal atelier: limestone arches, a gold H on the wall and an ivory gown on a dress form">
+      <div class="hud">TORONTO · ONTARIO<br>FASHION / HEALTH / WELLNESS</div>
+    </div>
+  </section>
+
+  <section class="section" id="consult">
+    <div class="wrap">
+      <div class="grid g2" style="align-items:end;margin-bottom:46px">
+        <div><div class="eyebrow">Virtual consultations</div><h2 style="margin-top:18px">Book time with a <em class="gold-d">Hatille consultant</em>.</h2></div>
+        <p class="muted">Colour analysis, personal style or alteration advice, live on video from wherever you are. Your consultant drapes colours on screen in real time. Pay securely when you book; prices include tax.</p>
+      </div>
+      <div class="plans">
+        <article class="plan">
+          <div class="len">15 minutes</div><h3>Discovery call</h3>
+          <div class="price">Free</div><div class="tax">No payment needed</div>
+          <ul><li>Share what you need</li><li>Find the right next step</li></ul>
+          <a class="btn ghost" href="https://cal.com/hatille/discovery" target="_blank" rel="noopener">Book a free call</a>
+        </article>
+        <article class="plan feat">
+          <span class="ribbon">Most popular</span>
+          <div class="len">30 minutes</div><h3>Consultation</h3>
+          <div class="price">$30<small>CAD</small></div><div class="tax">Taxes included</div>
+          <ul><li>Colour, style or alterations</li><li>Live draping on camera</li><li>Summary by email</li></ul>
+          <a class="btn" href="https://cal.com/hatille/consultation" target="_blank" rel="noopener" style="background:var(--gold);border-color:var(--gold);color:#0c0b0a">Book 30 minutes</a>
+        </article>
+        <article class="plan">
+          <div class="len">1 hour</div><h3>Full session</h3>
+          <div class="price">$60<small>CAD</small></div><div class="tax">Taxes included</div>
+          <ul><li>Full 12-season colour analysis</li><li>Style and wardrobe plan</li><li>Alteration advice</li></ul>
+          <a class="btn ghost" href="https://cal.com/hatille/full-session" target="_blank" rel="noopener">Book 1 hour</a>
+        </article>
+      </div>
+      <p class="note" style="margin-top:24px">🔒 Secure payment by Stripe. <a href="/book" style="color:var(--gold-deep)">How consultations work</a></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="grid g2" style="align-items:end;margin-bottom:70px">
+        <div><div class="eyebrow">What we offer</div><h2 style="margin-top:18px">One house for how you <em class="gold-d">look</em> and how you <em class="gold-d">feel</em>.</h2></div>
+        <p class="lead muted">Tools and guidance that make getting dressed easier, from your best colours to a perfect fit and a better mood.</p>
+      </div>
+      <div class="svc">
+        <a href="/colour-analysis"><span class="num">01</span><h3>Colour Analysis</h3><p class="muted">Upload a photo and see professional colour drapes against your skin tone. Find your season and your palette.</p><span class="arrow">→</span></a>
+        <a href="/alterations"><span class="num">02</span><h3>Alteration Finder</h3><p class="muted">Tell us what needs changing. Get the words to use, how it's done, average cost and the best tailors in Ontario.</p><span class="arrow">→</span></a>
+        <a href="/alterations#bodice"><span class="num">03</span><h3>Pattern Blocks</h3><p class="muted">Enter your measurements and get a top, dress, skirt, pants or jacket block for women or men, ready to print at a print shop or at home.</p><span class="arrow">→</span></a>
+        <a href="/wellness"><span class="num">04</span><h3>Wellness</h3><p class="muted">Mood-lifting colour and style, plus simple habits for movement, water and dressing for success.</p><span class="arrow">→</span></a>
+        <a href="/shop"><span class="num">05</span><h3>Handmade Bridal</h3><p class="muted">Veils, hair pieces and hand-painted keepsake glass. The Hatille shop is coming soon. Join the waitlist.</p><span class="arrow">→</span></a>
+        <a href="/blog"><span class="num">06</span><h3>The Blog</h3><p class="muted">Fabric, colour and fashion stories, my fashion journey, and everything on our socials.</p><span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section beige">
+    <div class="wrap">
+      <div class="grid g2" style="align-items:end;margin-bottom:50px">
+        <div><div class="eyebrow">Hatille Handmade Bridal</div><h2 style="margin-top:18px">The first collection, <em class="gold-d">made by hand</em>.</h2></div>
+        <p class="lead muted">Veils, hair pieces and keepsake glass in ivory, gold and black. Coming soon to the Hatille shop.</p>
+      </div>
+      <div class="coll">
+        <a href="/shop#veils"><div class="ph-frame"><img src="assets/img/ph/cathedral-veil.jpg" alt="Cathedral veil with floral embroidery on a dress form" loading="lazy"></div><h3>Veils</h3><p class="note">Embroidered, pearl and lace-edged</p></a>
+        <a href="/shop#hair"><div class="ph-frame"><img src="assets/img/ph/hair-accessories.jpg" alt="Gold and pearl bridal hair piece with ivory flowers" loading="lazy"></div><h3>Hair pieces</h3><p class="note">Combs, vines and pins in gold and pearl</p></a>
+        <a href="/shop#flutes"><div class="ph-frame"><img src="assets/img/ph/flutes-black-gold.jpg" alt="Champagne flutes hand-painted with black, white and gold flowers" loading="lazy"></div><h3>Champagne flutes</h3><p class="note">Hand-painted in gold, black and white</p></a>
+        <a href="/shop#glass"><div class="ph-frame"><img src="assets/img/ph/framed-glass.jpg" alt="Gold frame holding glass hand-painted with white, gold and black flowers" loading="lazy"></div><h3>Keepsake glass</h3><p class="note">Framed and painted for your date</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="split dark">
+    <img src="assets/img/ph/bride-veil.jpg" alt="A bride from behind wearing a long embroidered veil, holding a bouquet">
+    <div class="txt gridlines">
+      <div class="eyebrow">Hatille Handmade Bridal</div>
+      <h2 style="margin-top:20px">Something <em class="gold-l">gold</em> is coming.</h2>
+      <p class="lead muted" style="margin-top:24px">Handmade veils and hair pieces, plus champagne flutes and framed wedding glass hand-painted in gold, black and white. Be first to know when the shop opens.</p>
+      <div style="margin-top:36px"><a class="btn" href="/shop">Join the waitlist</a></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap pillars">
+      <a href="/colour-analysis" style="text-decoration:none;color:inherit"><div class="ph-frame"><img src="assets/img/ph/silk-monogram.jpg" alt="Champagne silk with a gold monogram" loading="lazy"></div><div class="num">FOR YOUR SKIN TONE</div><h3 style="margin:14px 0 10px">Colour that lights you up</h3><p class="muted">Professional draping, made digital. See warm against cool, then your full season.</p><span class="link">Try it</span></a>
+      <a href="/alterations" style="text-decoration:none;color:inherit"><div class="ph-frame"><img src="assets/img/ph/garment-rail.jpg" alt="Ivory and black garments on a gold rail in a stone boutique" loading="lazy"></div><div class="num">FOR YOUR FIT</div><h3 style="margin:14px 0 10px">Tailoring, demystified</h3><p class="muted">Know exactly what to ask for and what it should cost before you walk in.</p><span class="link">Find a tailor</span></a>
+      <a href="/wellness" style="text-decoration:none;color:inherit"><div class="ph-frame"><img src="assets/img/ph/stone-arch.jpg" alt="Sunlit stone arches with branches in a vase" loading="lazy"></div><div class="num">FOR YOUR MIND</div><h3 style="margin:14px 0 10px">Dress your mood brighter</h3><p class="muted">Small daily rituals with colour, movement and water that make a real difference.</p><span class="link">Feel better</span></a>
+    </div>
+  </section>
+
+  <section class="band section tight dark" style="text-align:center">
+    <div class="wrap">
+      <img src="assets/img/hatille-wordmark-gold.svg" alt="Hatille" style="height:54px;margin:0 auto 26px">
+      <p class="eyebrow" style="margin-bottom:30px">Follow the journey</p>
+      <div class="chips" style="justify-content:center" id="soc"></div>
+    </div>
+  </section>
+</main>
+<script src="assets/site.js"></script>
+<script>
+  document.getElementById('soc').innerHTML = Object.entries(HATILLE.socials).map(([t, h]) => `<a class="chip" style="color:#fff;text-decoration:none" href="${h}" target="_blank" rel="noopener">${t}</a>`).join('');
+</script>
+</body>
+</html>

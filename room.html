@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your Hatille Session</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/img/hatille-icon-black.svg">
+<meta name="theme-color" content="#0c0b0a">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital@1&family=Poppins:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  html,body{height:100%}
+  body{background:#0c0b0a;color:#fff;margin:0}
+  .rtop{display:flex;justify-content:space-between;align-items:center;padding:16px 22px;border-bottom:1px solid var(--line-dark)}
+  .rtop img{height:20px}
+  .rtop span{font:500 11px var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--gold-light)}
+  .screen{max-width:1200px;margin:0 auto;padding:28px 20px}
+  .lobby{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:36px;align-items:center;min-height:calc(100vh - 140px)}
+  .lobby h1{font:300 clamp(30px,4vw,46px)/1.15 var(--serif);margin:0 0 14px}
+  .lobby h1 em{font-family:'Lora',serif;color:var(--gold-light)}
+  .lobby p{color:#cfc8bc;line-height:1.7;font-size:15px}
+  .prev{position:relative;background:#1a1714;aspect-ratio:4/3;overflow:hidden}
+  .prev video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+  .prev .off{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#a39d94;font-size:14px;text-align:center;padding:20px}
+  .field{width:100%;background:#0c0b0a;color:#fff;border:1px solid #3a352f;padding:13px;font:400 15px var(--sans);margin:14px 0 12px}
+  .rbtn{background:transparent;color:#e9e3d8;border:1px solid #3a352f;padding:12px 18px;font:500 12px var(--sans);letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+  .rbtn:hover{border-color:var(--gold);color:var(--gold-light)}
+  .rbtn.gold{background:var(--gold);border-color:var(--gold);color:#0c0b0a}
+  .rbtn.red{border-color:#a3473a;color:#f1c4bc}
+  .rbtn.off{background:#3a352f;color:#fff}
+  .tips{margin-top:22px;border-top:1px solid var(--line-dark);padding-top:16px;font-size:13px;color:#a39d94;line-height:1.75}
+  .tips b{color:#e9e3d8;font-weight:500}
+  .status{margin-top:14px;font-size:14px;color:var(--gold-light);min-height:22px}
+  /* call */
+  .call{position:fixed;inset:0;background:#0c0b0a;display:none;flex-direction:column}
+  body.incall .call{display:flex}
+  body.incall .rtop,body.incall .screen{display:none}
+  .main{position:relative;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;background:#000}
+  .main video{max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain}
+  .main video.pip{position:absolute;width:min(24vw,220px);height:auto;aspect-ratio:4/3;object-fit:cover;background:#1a1714;border:1px solid rgba(255,255,255,.25)}
+  #selfV{right:16px;bottom:16px;transform:scaleX(-1)}
+  #hostPip{right:16px;top:16px;display:none}
+  body.studio #hostPip{display:block}
+  .label{position:absolute;left:16px;bottom:16px;font:500 11px var(--sans);letter-spacing:.2em;text-transform:uppercase;background:rgba(12,11,10,.75);padding:7px 11px}
+  .wait{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;gap:12px}
+  .wait img{height:26px;opacity:.9}
+  .wait p{color:#cfc8bc;font-size:15px;max-width:420px;line-height:1.7}
+  .bar{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:14px;padding-bottom:max(14px,env(safe-area-inset-bottom));border-top:1px solid var(--line-dark);background:#0c0b0a}
+  .hidden{display:none!important}
+  @media (max-width:800px){.lobby{grid-template-columns:1fr;gap:22px}.prev{order:-1;aspect-ratio:16/10}.main video.pip{width:30vw}}
+</style>
+</head>
+<body>
+<div class="rtop"><a href="/"><img src="assets/img/hatille-wordmark-gold.svg" alt="Hatille"></a><span>Private consultation room</span></div>
+
+<div class="screen">
+  <div class="lobby">
+    <div>
+      <p class="eyebrow" style="margin:0 0 12px">Welcome</p>
+      <h1>Your <em>Hatille</em> consultation</h1>
+      <p>Join a few minutes before your booked time. Your consultant will let you in, and you'll see your colour drapes live on screen.</p>
+      <input class="field" id="name" type="text" placeholder="Your name" autocomplete="name" maxlength="60">
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="rbtn gold" id="join">Join the session</button>
+        <button class="rbtn" id="testCam">Check camera</button>
+      </div>
+      <div class="status" id="status" role="status" aria-live="polite"></div>
+      <div class="tips">
+        <b>For an accurate colour reading</b><br>
+        Sit facing a window in daylight · no makeup or a light, neutral look · hair pulled back · plain white or grey top · avoid coloured lamps behind you.<br><br>
+        <b>Trouble joining?</b> Use Chrome, Edge or Safari, allow camera and microphone when asked, and refresh the page. You can also email <a href="mailto:info.hatille@gmail.com" style="color:var(--gold-light)">info.hatille@gmail.com</a>.<br>
+        This call is private and goes directly between you and your consultant. It is not recorded.
+      </div>
+    </div>
+    <div class="prev"><video id="prevV" autoplay muted playsinline></video><div class="off" id="prevOff">Your camera preview will appear here.</div></div>
+  </div>
+</div>
+
+<div class="call">
+  <div class="main">
+    <video id="mainV" autoplay playsinline></video>
+    <video id="hostPip" class="pip" autoplay playsinline muted></video>
+    <video id="selfV" class="pip" autoplay muted playsinline></video>
+    <span class="label" id="mainLabel">Your consultant · Hatille</span>
+    <div class="wait" id="wait"><img src="assets/img/hatille-wordmark-gold.svg" alt="Hatille"><p id="waitMsg">Connecting…</p></div>
+  </div>
+  <div class="bar">
+    <button class="rbtn" id="mic">Mute</button>
+    <button class="rbtn" id="cam">Camera off</button>
+    <button class="rbtn red" id="leave">Leave</button>
+  </div>
+</div>
+
+<audio id="hostAudio" autoplay></audio>
+<script src="assets/vendor/peerjs.min.js"></script>
+<script src="assets/room.js"></script>
+<script>
+const $ = s => document.querySelector(s);
+let local = null, peer = null, conn = null, retry = null, camCall = null, hostStream = null, studioStream = null, admitted = false;
+try { $('#name').value = localStorage.getItem('hatille-name') || ''; } catch (e) {}
+const status = t => $('#status').textContent = t;
+const waitMsg = t => { $('#wait').classList.remove('hidden'); $('#waitMsg').textContent = t; };
+
+async function getMedia() {
+  if (local) return local;
+  try { local = await navigator.mediaDevices.getUserMedia(HROOM.media); }
+  catch (e) {
+    try { local = await navigator.mediaDevices.getUserMedia({ video: true, audio: true }); }
+    catch (e2) { status('Please allow camera and microphone access in your browser, then try again.'); throw e2; }
+  }
+  $('#prevV').srcObject = local; $('#prevOff').classList.add('hidden'); $('#selfV').srcObject = local;
+  return local;
+}
+$('#testCam').onclick = () => getMedia().then(() => status('Camera and microphone are working.')).catch(() => {});
+
+function layout() {
+  const showStudio = studioStream && document.body.classList.contains('studio');
+  $('#mainV').srcObject = showStudio ? studioStream : hostStream;
+  $('#mainV').muted = true; // sound always plays through #hostAudio
+  $('#hostPip').srcObject = showStudio ? hostStream : null;
+  $('#mainLabel').textContent = showStudio ? 'Your colour drapes · live' : 'Your consultant · Hatille';
+  $('#mainV').play().catch(() => {});
+}
+
+$('#join').onclick = async () => {
+  const name = $('#name').value.trim();
+  if (!name) { status('Please enter your name.'); $('#name').focus(); return; }
+  try { localStorage.setItem('hatille-name', name); } catch (e) {}
+  try { await getMedia(); } catch (e) { return; }
+  document.body.classList.add('incall'); waitMsg('Connecting…');
+  connect(name);
+};
+
+function connect(name) {
+  if (peer && !peer.destroyed) peer.destroy();
+  peer = new Peer(HROOM.peerOptions);
+  peer.on('open', () => knock(name));
+  peer.on('error', err => {
+    if (err.type === 'peer-unavailable') { waitMsg('Your consultant hasn\'t opened the room yet. Please stay on this page. You will join as soon as they do.'); clearTimeout(retry); retry = setTimeout(() => knock(name), 8000); }
+    else if (['network', 'server-error', 'socket-error', 'socket-closed', 'disconnected'].includes(err.type)) { waitMsg('Reconnecting…'); clearTimeout(retry); retry = setTimeout(() => connect(name), 4000); }
+    else waitMsg('Something went wrong (' + err.type + '). Please refresh the page.');
+  });
+  peer.on('call', call => {
+    const kind = (call.metadata || {}).kind;
+    if (kind === 'studio') {
+      call.answer();
+      call.on('stream', s => { studioStream = s; layout(); });
+    } else {
+      camCall = call; call.answer(local);
+      call.on('stream', s => { hostStream = s; $('#hostAudio').srcObject = s; $('#hostAudio').play().catch(() => {}); $('#wait').classList.add('hidden'); layout(); });
+      call.on('close', ended);
+    }
+  });
+}
+
+function knock(name) {
+  if (conn) try { conn.close(); } catch (e) {}
+  conn = peer.connect(HROOM.hostId, { metadata: { name }, reliable: true });
+  conn.on('open', () => waitMsg('You\'re in the waiting room. Your consultant will let you in shortly.'));
+  conn.on('data', d => {
+    if (!d || !d.t) return;
+    if (d.t === 'admit') { admitted = true; waitMsg('Joining…'); }
+    if (d.t === 'decline') { waitMsg('Your consultant is with another client right now. Please wait for your booked time, or email info.hatille@gmail.com.'); }
+    if (d.t === 'busy') { waitMsg('Your consultant is finishing another session. You will be let in shortly.'); clearTimeout(retry); retry = setTimeout(() => knock(name), 15000); }
+    if (d.t === 'studio') { document.body.classList.toggle('studio', !!d.on); layout(); }
+    if (d.t === 'end') ended();
+  });
+  conn.on('close', () => { if (admitted) ended(); });
+}
+
+function ended() {
+  admitted = false; hostStream = null; studioStream = null; document.body.classList.remove('studio');
+  $('#mainV').srcObject = null; $('#hostPip').srcObject = null;
+  waitMsg('Your session has ended. Thank you! Your consultant will email your results. You can close this page.');
+}
+
+$('#mic').onclick = () => { if (!local) return; const t = local.getAudioTracks()[0]; if (!t) return; t.enabled = !t.enabled; $('#mic').textContent = t.enabled ? 'Mute' : 'Unmute'; $('#mic').classList.toggle('off', !t.enabled); };
+$('#cam').onclick = () => { if (!local) return; const t = local.getVideoTracks()[0]; if (!t) return; t.enabled = !t.enabled; $('#cam').textContent = t.enabled ? 'Camera off' : 'Camera on'; $('#cam').classList.toggle('off', !t.enabled); };
+$('#leave').onclick = () => {
+  try { conn && conn.open && conn.send({ t: 'leave' }); } catch (e) {}
+  clearTimeout(retry); if (peer) peer.destroy();
+  if (local) local.getTracks().forEach(t => t.stop()); local = null;
+  document.body.classList.remove('incall', 'studio'); $('#prevOff').classList.remove('hidden'); status('You have left the session. You can rejoin any time.');
+};
+window.addEventListener('beforeunload', () => { try { conn && conn.open && conn.send({ t: 'leave' }); } catch (e) {} });
+</script>
+</body>
+</html>

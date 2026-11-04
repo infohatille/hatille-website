@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Downloads · Hatille</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/img/hatille-icon-black.svg">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<meta name="theme-color" content="#0c0b0a">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital@1&family=Poppins:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .dlwrap{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  @media (max-width:900px){.dlwrap{grid-template-columns:1fr}}
+  .card{background:var(--white);border:1px solid var(--line);padding:34px;display:flex;flex-direction:column;gap:14px}
+  .card.on{border-color:var(--gold)}
+  .card img{width:100%;aspect-ratio:4/3;object-fit:cover;background:#efe6d8}
+  .card h3{font-size:24px;margin:4px 0 0}
+  .card select,.card input{width:100%;padding:13px;border:1px solid var(--line);font:400 15px var(--sans);background:#fff}
+  .card label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:-6px}
+  .ok{border:1px solid var(--gold);background:linear-gradient(135deg,#fffdf8,#f6efe2);padding:22px 26px;margin-bottom:34px}
+  .msg{font-size:13px;color:var(--gold-deep);min-height:20px}
+</style>
+</head>
+<body>
+<main>
+  <section class="section">
+    <div class="wrap">
+      <div class="eyebrow">Your downloads</div>
+      <h1 style="margin:18px 0 26px;font-size:clamp(34px,4.4vw,58px)">Thank you. <em class="gold-d">Your files are ready.</em></h1>
+      <div id="status"></div>
+      <div class="dlwrap" id="list"></div>
+      <p class="note" style="margin-top:30px">Your downloads stay available in this browser on this device. Save your PDFs somewhere safe. Lost a file or need it on another device? Email <a href="mailto:info.hatille@gmail.com" style="color:var(--gold-deep)">info.hatille@gmail.com</a> with your Stripe receipt and we'll send it to you.</p>
+    </div>
+  </section>
+</main>
+<script src="assets/site.js"></script>
+<script src="assets/colour.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/guides.js"></script>
+<script src="assets/products.js"></script>
+<script>
+(function () {
+  const S = HatilleShop, $ = s => document.querySelector(s), q = new URLSearchParams(location.search);
+  const item = q.get('item'), sid = q.get('session_id');
+  const IMG = { palette: 'palette-guide', swatch: 'swatch-fan', planner: 'bridal-planner', block: 'pattern-blocks', blockset: 'pattern-blocks' };
+  let justBought = null;
+  if (item && HATILLE.products[item] && sid) {
+    if (S.record(item, sid)) { justBought = item; history.replaceState(null, '', '/download'); }
+    else $('#status').innerHTML = '<div class="ok"><b>We couldn\'t confirm that purchase link.</b><br>If you just paid, email info.hatille@gmail.com with your receipt and we\'ll send your file right away.</div>';
+  }
+  if (justBought) $('#status').innerHTML = `<div class="ok"><div class="eyebrow">Payment received</div><p style="margin:10px 0 0">Your <b>${HATILLE.products[justBought].name}</b> is below. A receipt from Stripe is on its way to your email.</p></div>`;
+  const owned = [...new Set(S.purchases().map(p => p.item))].filter(k => HATILLE.products[k]);
+  if (!owned.length) {
+    $('h1').innerHTML = 'Your <em class="gold-d">downloads</em>';
+    $('#list').innerHTML = `<div class="card" style="grid-column:1/-1"><h3>No downloads on this device yet</h3><p class="muted">After you buy a guide or planner, it appears here so you can download it again any time.</p><a class="btn" href="/shop#downloads" style="align-self:flex-start">Browse digital downloads</a></div>`;
+    return;
+  }
+  const seasons = Object.keys(SEASONS), saved = S.get('hatille-season', '') || '';
+  const seasonSel = id => `<label for="${id}">Your season</label><select id="${id}">${seasons.map(n => `<option ${n === saved ? 'selected' : ''}>${n}</option>`).join('')}</select><span class="season-warn" style="display:block;margin:2px 0 4px;font-size:13.5px;padding:12px 14px"><b>Choose your season carefully.</b> Your file is made for the season you pick. Not completely sure? <a href="/colour-analysis" target="_blank">Take the free colour analysis</a> or <a href="/book" target="_blank">see a Hatille consultant</a> before downloading. <span class="fs">Digital downloads are final sale, with no refunds for choosing the wrong season.</span></span>`;
+  const cards = {
+    palette: () => `<h3>Personal Colour Palette Guide</h3>${seasonSel('s-palette')}<label for="n-palette">Your name (for the cover)</label><input id="n-palette" maxlength="40" placeholder="e.g. Ava Thompson"><button class="btn" data-make="palette" style="background:var(--gold);border-color:var(--gold);color:#0c0b0a">Download my guide (PDF)</button><span class="msg" id="m-palette"></span>`,
+    swatch: () => `<h3>Swatch Card &amp; Fan</h3>${seasonSel('s-swatch')}<label for="n-swatch">Your name (optional)</label><input id="n-swatch" maxlength="40"><button class="btn" data-make="swatch" style="background:var(--gold);border-color:var(--gold);color:#0c0b0a">Download my swatches (PDF)</button><span class="msg" id="m-swatch"></span><span class="note">Print at 100% on matte card stock.</span>`,
+    planner: () => `<h3>Bride's Alteration &amp; Wedding Planner</h3><label for="n-planner">Names for the cover</label><input id="n-planner" maxlength="50" placeholder="e.g. Ava &amp; Marcus"><label for="d-planner">Wedding date</label><input id="d-planner" maxlength="40" placeholder="e.g. June 12, 2027"><button class="btn" data-make="planner" style="background:var(--gold);border-color:var(--gold);color:#0c0b0a">Download my planner (PDF)</button><span class="msg" id="m-planner"></span><span class="note">Fill it in on a computer or tablet (Adobe Acrobat Reader, Preview or your browser), or print it.</span>`,
+    blockset: () => `<h3>Pattern Block Full Set</h3><p class="muted" style="margin:0">All 8 pattern blocks are unlocked on this device: women's top, dress, skirt, pants and jacket, and men's shirt, pants and jacket, with every piece including sleeves.</p><a class="btn" href="/alterations?resume=1#bodice" style="background:var(--gold);border-color:var(--gold);color:#0c0b0a">Make my pattern blocks</a><span class="note">Enter your measurements once, then download any block, as often as you like.</span>`,
+    block: () => { const n = S.credits().length; return `<h3>Pattern block credit</h3><p class="muted" style="margin:0">${n ? `You have <b>${n} pattern block credit${n > 1 ? 's' : ''}</b> ready to use.` : 'Your pattern block credits have been used. Your unlocked blocks stay downloadable on this device.'}</p><a class="btn" href="/alterations?resume=1#bodice" style="background:var(--gold);border-color:var(--gold);color:#0c0b0a">Go to my pattern block</a><span class="note">Your measurements were saved, so you'll pick up right where you left off.</span>`; },
+  };
+  const order = justBought ? [justBought].concat(owned.filter(k => k !== justBought)) : owned;
+  $('#list').innerHTML = order.map(k => `<div class="card ${k === justBought ? 'on' : ''}"><img src="assets/img/products/${IMG[k]}.jpg" alt="">${cards[k]()}</div>`).join('');
+  const slug = s => s.replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  document.querySelectorAll('[data-make]').forEach(b => b.addEventListener('click', async () => {
+    const k = b.dataset.make, msg = $('#m-' + k); msg.textContent = 'Preparing your PDF…'; b.disabled = true;
+    try {
+      let doc, name;
+      if (k === 'planner') { const bride = $('#n-planner').value.trim(), date = $('#d-planner').value.trim(); doc = await HatilleProducts.bridalPlanner({ bride, date }); name = 'Hatille-Bridal-Planner' + (bride ? '-' + slug(bride) : '') + '.pdf'; }
+      else { const season = $('#s-' + k).value, nm = $('#n-' + k).value.trim(); S.set('hatille-season', season); doc = k === 'palette' ? await HatilleProducts.paletteGuide({ season, name: nm }) : await HatilleProducts.swatchSet({ season, name: nm }); name = `Hatille-${k === 'palette' ? 'Colour-Palette' : 'Swatch-Card-Fan'}-${slug(season)}.pdf`; }
+      doc.save(name); msg.textContent = 'Downloaded ' + name + '. Check your Downloads folder.';
+    } catch (e) { console.error(e); msg.textContent = 'Sorry, something went wrong. Please try again in Chrome, Edge or Safari.'; }
+    b.disabled = false;
+  }));
+})();
+</script>
+</body>
+</html>
